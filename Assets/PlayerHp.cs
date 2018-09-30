@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerHp : MonoBehaviour {
 
+
     CharacterMovement playerMovement;
     public int maxHP = 3;
     public int currentHP;
