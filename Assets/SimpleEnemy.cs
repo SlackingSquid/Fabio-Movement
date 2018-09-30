@@ -61,7 +61,7 @@ public class SimpleEnemy : MonoBehaviour {
 
         if(HP <= 0)
         {
-            Destroy(gameObject, 0.5f);
+            Destroy(gameObject);
         }
 
     }
