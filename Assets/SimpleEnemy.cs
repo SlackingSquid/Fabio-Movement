@@ -27,7 +27,7 @@ public class SimpleEnemy : MonoBehaviour {
 
         if(Vector3.Distance(transform.position,GameManager.Instance.player.transform.position) < 30f)
         {
-            if(Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < 2f)
+            if(Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < 3f)
             {
                 attakingPlayer = true;
                 walkToPlayer = false;
@@ -79,7 +79,8 @@ public class SimpleEnemy : MonoBehaviour {
     {
         //anim.SetTrigger("attack");
         canWalk = false;
-        agent.Move(-transform.forward);
+        agent.SetDestination(transform.position);
+        anim.SetTrigger("gotHit");
         yield return new WaitForSeconds(2f);
         canWalk = true;
     }
@@ -96,7 +97,8 @@ public class SimpleEnemy : MonoBehaviour {
         if(other.gameObject.tag == "PlayerDamage")
         {
             HP -= 1;
-            anim.SetTrigger("gotHit");
+            StartCoroutine(GotHit());
+            GameManager.Instance.cameraShake.Shake(0.2f, 0.2f, 0.4f);
         }
     }
 }

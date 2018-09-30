@@ -55,7 +55,7 @@ public class CharacterMovement : MonoBehaviour {
     bool isMounted = false;
     Mount currentMount;
 
-    public GameObject edgeGrabPos;
+    public PlayerAnimations playerAnim;
 
     // Use this for initialization
     void Start() {
@@ -176,6 +176,11 @@ public class CharacterMovement : MonoBehaviour {
             }
         }
 
+        if(Input.GetButtonDown("Fire1") && !rolling)
+        {
+            playerAnim.Attack();
+        }
+
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(moveDir), Time.deltaTime * turnSpeed);
         // transform.forward = Vector3.Lerp(transform.forward, moveDir, Time.deltaTime * 10f);
@@ -221,20 +226,6 @@ public class CharacterMovement : MonoBehaviour {
                 sliding = false;
             }
         }
-
-
-        //if (Physics.Raycast(edgeGrabPos.transform.position, Vector3.down, out hit, 0.5f))
-        //{
-        //    if (!isGrounded)
-        //    {
-                
-        //        if(!hasJumped)
-        //            RB.velocity = transform.forward*5f;
-        //        Jump();
-        //    }
-        //}
-
-
     }
 
     private void FixedUpdate()
@@ -280,6 +271,7 @@ public class CharacterMovement : MonoBehaviour {
     {
         takingMoveInput = false;
         takingJumpInput = false;
+        playerAnim.anim.SetBool("rolling", true);
         playerCollision.SetActive(false);
         rollCollision.SetActive(true);
         vel = moveDir * rollSpeed;
@@ -295,6 +287,7 @@ public class CharacterMovement : MonoBehaviour {
     {
         takingMoveInput = true;
         takingJumpInput = true;
+        playerAnim.anim.SetBool("rolling", false);
         playerCollision.SetActive(true);
         rollCollision.SetActive(false);
         rolling = false;
@@ -338,13 +331,4 @@ public class CharacterMovement : MonoBehaviour {
         lVel = currentMount.RB.velocity;
     }
 
-    public IEnumerator ApplyKnockBack(Vector3 Direction, float force, float time)
-    {
-        takingJumpInput = false;
-        takingMoveInput = false;
-        RB.velocity = Direction * force;
-        yield return new WaitForSeconds(time);
-        takingJumpInput = true;
-        takingMoveInput = true;
-    }
 }
