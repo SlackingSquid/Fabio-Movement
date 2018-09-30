@@ -6,6 +6,9 @@ public class SimpleEnemy : MonoBehaviour {
 
     private UnityEngine.AI.NavMeshAgent agent;
     public Animator anim;
+    public GameObject attackCone;
+    public int HP = 3;
+
 
     bool walkToPlayer = false;
     bool canWalk = true;
@@ -56,6 +59,11 @@ public class SimpleEnemy : MonoBehaviour {
             anim.SetBool("walk", false);
         }
 
+        if(HP <= 0)
+        {
+            Destroy(gameObject, 0.5f);
+        }
+
     }
 
     IEnumerator Attack()
@@ -65,5 +73,30 @@ public class SimpleEnemy : MonoBehaviour {
         yield return new WaitForSeconds(2f);
         attackPlayer = true;
         canWalk = true;
+    }
+
+    IEnumerator GotHit()
+    {
+        //anim.SetTrigger("attack");
+        canWalk = false;
+        agent.Move(-transform.forward);
+        yield return new WaitForSeconds(2f);
+        canWalk = true;
+    }
+
+    public IEnumerator ActivateAttackCone()
+    {
+        attackCone.SetActive(true);
+        yield return new WaitForFixedUpdate();
+        attackCone.SetActive(false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "PlayerDamage")
+        {
+            HP -= 1;
+            anim.SetTrigger("gotHit");
+        }
     }
 }
