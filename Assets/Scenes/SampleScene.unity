@@ -4925,24 +4925,6 @@ Prefab:
       propertyPath: cam
       value: 
       objectReference: {fileID: 534669902}
-    - target: {fileID: 4737994189654046, guid: 81d5eddf8a8e75146b216895528c0bf7, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4737994189654046, guid: 81d5eddf8a8e75146b216895528c0bf7, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.9999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 23492844795939708, guid: 81d5eddf8a8e75146b216895528c0bf7,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23661030605821998, guid: 81d5eddf8a8e75146b216895528c0bf7,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81d5eddf8a8e75146b216895528c0bf7, type: 2}
   m_IsPrefabAsset: 0

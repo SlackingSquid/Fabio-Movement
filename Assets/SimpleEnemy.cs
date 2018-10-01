@@ -27,7 +27,7 @@ public class SimpleEnemy : MonoBehaviour {
 
         if(Vector3.Distance(transform.position,GameManager.Instance.player.transform.position) < 30f)
         {
-            if(Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < 3f)
+            if(Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < 3f && Vector3.Dot(transform.forward,(GameManager.Instance.player.transform.position - transform.position).normalized) > 0.3f)
             {
                 attakingPlayer = true;
                 walkToPlayer = false;
