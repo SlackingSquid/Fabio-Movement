@@ -271,7 +271,6 @@ public class CharacterMovement : MonoBehaviour {
     {
         takingMoveInput = false;
         takingJumpInput = false;
-        playerAnim.anim.SetBool("rolling", true);
         playerCollision.SetActive(false);
         rollCollision.SetActive(true);
         vel = moveDir * rollSpeed;
@@ -287,7 +286,6 @@ public class CharacterMovement : MonoBehaviour {
     {
         takingMoveInput = true;
         takingJumpInput = true;
-        playerAnim.anim.SetBool("rolling", false);
         playerCollision.SetActive(true);
         rollCollision.SetActive(false);
         rolling = false;
