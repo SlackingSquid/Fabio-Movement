@@ -15,6 +15,7 @@ public class PlayerHp : MonoBehaviour {
     public Image hpBar;
     public Image hpBarBG;
 
+
     // Use this for initialization
     void Start () {
 
@@ -38,7 +39,6 @@ public class PlayerHp : MonoBehaviour {
         if(other.gameObject.tag == "Damage" && canTakeDamage)
         {
             currentHP -= 1;
-            //StartCoroutine(playerMovement.ApplyKnockBack((transform.position - (playerMovement.transform.position + (Vector3.up * 0.5f))).normalized, 100f, 0.5f));
             playerMovement.ApplyForce((transform.position - other.transform.position).normalized *15f, 0f);
             GameManager.Instance.cameraShake.Shake(0.4f, 0.2f, 0.6f);
             StartCoroutine(SetInvincibleForTime(invincibilityTime));
