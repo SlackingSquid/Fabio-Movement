@@ -28,6 +28,10 @@ public class Mount : MonoBehaviour {
                 }
             }
         }
+        if(other.gameObject.tag == "Damage" && playerIsOn)
+        {
+            GameManager.Instance.player.Jump();
+        }
     }
     public void PlayerDismounting()
     {

@@ -9,6 +9,7 @@ public class RinoMountMovement : Mount {
     float pMul = 1f;
     float wallCorrection = 0f;
     bool centerCamera = true;
+    public GameObject PlayerDamage;
     Vector3 vel;
 	// Use this for initialization
 	void Start () {
@@ -22,7 +23,9 @@ public class RinoMountMovement : Mount {
 		
         if(playerIsOn)
         {
-            if(centerCamera)
+            PlayerDamage.SetActive(true);
+
+            if (centerCamera)
             {
                 // StartCoroutine(GameManager.Instance.cameraFollow.SetCameraDirection((transform.forward - (Vector3.up*0.5f)).normalized, 200f));
                 centerCamera = false;
@@ -68,6 +71,7 @@ public class RinoMountMovement : Mount {
             {
                 centerCamera = true;
             }
+            PlayerDamage.SetActive(false);
         }
 
 	}

@@ -32,6 +32,7 @@ public class SimpleHomingEnemy : MonoBehaviour {
 
             transform.forward = Vector3.Lerp(transform.forward, vectorToPlayer, Time.deltaTime * rotationSpeed);
             RB.velocity = transform.forward * speed;
+            
         }
 
         if (HP <= 0)

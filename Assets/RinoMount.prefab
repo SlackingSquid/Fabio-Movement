@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4870719613626786}
   - component: {fileID: 33368394749777918}
   - component: {fileID: 23223088989663586}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 33778827279806470}
   - component: {fileID: 23133040417865378}
   - component: {fileID: 136044847741481328}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 33788934463090796}
   - component: {fileID: 23504608700047578}
   - component: {fileID: 65928333330184376}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 4974380198084562}
   - component: {fileID: 54152257809401512}
   - component: {fileID: 114232819409470470}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RinoMount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 33886161229343806}
   - component: {fileID: 23409531935689174}
   - component: {fileID: 136702857847181860}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,13 +109,30 @@ GameObject:
   - component: {fileID: 4239650814116484}
   - component: {fileID: 33410891580478216}
   - component: {fileID: 23811347180777434}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1902423977748204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4250467703058780}
+  - component: {fileID: 33819373513918800}
+  - component: {fileID: 135355895202669072}
+  m_Layer: 2
+  m_Name: PlayerDamage
+  m_TagString: PlayerDamage
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!4 &4239650814116484
 Transform:
   m_ObjectHideFlags: 1
@@ -128,6 +145,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4984926728202588}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4250467703058780
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1902423977748204}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.99, z: 1.65}
+  m_LocalScale: {x: 1.6823721, y: 1.6823721, z: 1.6823721}
+  m_Children: []
+  m_Father: {fileID: 4974380198084562}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4523035951233716
 Transform:
@@ -175,11 +205,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1661787414044054}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 15.76, y: 6.68, z: 32.24}
+  m_LocalPosition: {x: 15.76, y: 1.3, z: 32.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4984926728202588}
   - {fileID: 4935225333235736}
+  - {fileID: 4250467703058780}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -402,6 +433,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1533954362886304}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &33819373513918800
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1902423977748204}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &33886161229343806
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -452,6 +490,19 @@ MonoBehaviour:
   playerIsOn: 0
   runSpeed: 16
   playerControl: 4
+  PlayerDamage: {fileID: 1902423977748204}
+--- !u!135 &135355895202669072
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1902423977748204}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136044847741481328
 CapsuleCollider:
   m_ObjectHideFlags: 1
