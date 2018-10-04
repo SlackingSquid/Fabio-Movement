@@ -8,6 +8,7 @@ public class SimpleEnemy : MonoBehaviour {
     public Animator anim;
     public GameObject attackCone;
     public int HP = 3;
+    public float playerDetectionRange = 20f;
 
 
     bool walkToPlayer = false;
@@ -25,7 +26,7 @@ public class SimpleEnemy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(Vector3.Distance(transform.position,GameManager.Instance.player.transform.position) < 30f)
+        if(Vector3.Distance(transform.position,GameManager.Instance.player.transform.position) < playerDetectionRange)
         {
             if(Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < 3f && Vector3.Dot(transform.forward,(GameManager.Instance.player.transform.position - transform.position).normalized) > 0.3f)
             {
@@ -98,7 +99,6 @@ public class SimpleEnemy : MonoBehaviour {
         {
             HP -= 1;
             StartCoroutine(GotHit());
-            GameManager.Instance.cameraShake.Shake(0.2f, 0.2f, 0.4f);
         }
     }
 }

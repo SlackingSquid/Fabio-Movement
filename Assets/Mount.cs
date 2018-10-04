@@ -18,11 +18,14 @@ public class Mount : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent != null)
+        if (other.gameObject.tag == "Player")
         {
-            if (other.transform.parent.gameObject.GetComponent<CharacterMovement>() != null)
+            if (other.transform.parent != null)
             {
-                other.transform.parent.gameObject.GetComponent<CharacterMovement>().MountPlayer(this);
+                if (other.transform.parent.gameObject.GetComponent<CharacterMovement>() != null)
+                {
+                    other.transform.parent.gameObject.GetComponent<CharacterMovement>().MountPlayer(this);
+                }
             }
         }
     }

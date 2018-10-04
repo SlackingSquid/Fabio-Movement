@@ -105,6 +105,8 @@ GameObject:
   - component: {fileID: 4370561863270402}
   - component: {fileID: 33834043127369762}
   - component: {fileID: 64433583848383626}
+  - component: {fileID: 54268108912046730}
+  - component: {fileID: 114891321355036906}
   m_Layer: 0
   m_Name: attackCone
   m_TagString: PlayerDamage
@@ -232,7 +234,7 @@ Transform:
   m_GameObject: {fileID: 1646503408949670}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.22, z: 0}
-  m_LocalScale: {x: 1.8147346, y: 1.802661, z: 2.0773933}
+  m_LocalScale: {x: 2.1897235, y: 2.3595028, z: 2.7191}
   m_Children: []
   m_Father: {fileID: 4971657740394240}
   m_RootOrder: 5
@@ -541,6 +543,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1646503408949670}
   m_Mesh: {fileID: 4300000, guid: 9d289ce2da1867746a791fa1ed3f59c6, type: 3}
+--- !u!54 &54268108912046730
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1646503408949670}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!54 &54818457844052020
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -601,7 +618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   walkSpeed: 8
-  turnSpeed: 800
+  turnSpeed: 1200
   airControl: 50
   airControlMaxSpeed: 10
   jumpCurve:
@@ -687,6 +704,7 @@ MonoBehaviour:
   maxHP: 3
   currentHP: 3
   invincibilityTime: 1
+  canTakeDamage: 0
   hpBar: {fileID: 0}
   hpBarBG: {fileID: 0}
 --- !u!114 &114815934608083228
@@ -701,6 +719,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 95984771300403824}
+--- !u!114 &114891321355036906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1646503408949670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68af4fd19c5d6cd49a76a4684932b2f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114944900229720170
 MonoBehaviour:
   m_ObjectHideFlags: 1

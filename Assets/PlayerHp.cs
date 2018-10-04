@@ -10,7 +10,7 @@ public class PlayerHp : MonoBehaviour {
     public int maxHP = 3;
     public int currentHP;
     public float invincibilityTime = 1f;
-    bool canTakeDamage = false;
+    public bool canTakeDamage = false;
 
     public Image hpBar;
     public Image hpBarBG;
@@ -36,13 +36,18 @@ public class PlayerHp : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.tag == "Damage" && canTakeDamage)
+        if (other.gameObject.tag == "Damage" && canTakeDamage)
         {
-            currentHP -= 1;
-            playerMovement.ApplyForce((transform.position - other.transform.position).normalized *15f, 0f);
-            GameManager.Instance.cameraShake.Shake(0.4f, 0.2f, 0.6f);
-            StartCoroutine(SetInvincibleForTime(invincibilityTime));
+            TakeDamage(other);
         }
+    }
+
+    public void TakeDamage(Collider other)
+    {
+        currentHP -= 1;
+        playerMovement.ApplyForce((transform.position - other.transform.position).normalized * 15f, 0f);
+        GameManager.Instance.cameraShake.Shake(0.4f, 0.2f, 0.6f);
+        StartCoroutine(SetInvincibleForTime(invincibilityTime));
     }
 
     public IEnumerator SetInvincibleForTime(float time)
