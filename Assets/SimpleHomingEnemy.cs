@@ -24,15 +24,19 @@ public class SimpleHomingEnemy : MonoBehaviour {
 
         if (Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < playerDetectionRange)
         {
-            //Quaternion.RotateTowards(Quaternion.LookRotation(transform.forward), Quaternion.LookRotation((transform.position - GameManager.Instance.player.transform.position).normalized),500f);
             if(RB.useGravity)
                 vectorToPlayer = (new Vector3(GameManager.Instance.player.transform.position.x,transform.position.y, GameManager.Instance.player.transform.position.z) - transform.position).normalized;
             else
                 vectorToPlayer = ((GameManager.Instance.player.transform.position + (Vector3.up*0.5f)) - transform.position).normalized;
 
-            transform.forward = Vector3.Lerp(transform.forward, vectorToPlayer, Time.deltaTime * rotationSpeed);
+            
             RB.velocity = transform.forward * speed;
             
+        }
+
+        if(vectorToPlayer != Vector3.zero)
+        {
+            transform.forward = Vector3.Lerp(transform.forward, vectorToPlayer, Time.deltaTime * rotationSpeed);
         }
 
         if (HP <= 0)
