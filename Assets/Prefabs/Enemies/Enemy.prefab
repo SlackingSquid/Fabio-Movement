@@ -647,6 +647,7 @@ MonoBehaviour:
   anim: {fileID: 95858076860371574}
   attackCone: {fileID: 1535477473578056}
   HP: 3
+  playerDetectionRange: 20
 --- !u!136 &136250410482188676
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -619,8 +619,8 @@ MonoBehaviour:
   cam: {fileID: 0}
   walkSpeed: 8
   turnSpeed: 1200
-  airControl: 50
-  airControlMaxSpeed: 10
+  airControl: 25
+  airControlMaxSpeed: 8
   jumpCurve:
     serializedVersion: 2
     m_Curve:
