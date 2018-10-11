@@ -670,7 +670,7 @@ MonoBehaviour:
   projctile: {fileID: 1048544331032844, guid: b4078ec5f1669f948988bcc0c5ef3a80, type: 2}
   HP: 3
   playerDetectionRange: 20
-  shootingRange: 10
+  shootingRange: 15
   attackAnimTime: 1
   ROF: 2
   deathEffect: {fileID: 1253988984898258, guid: f1972573ce538f84b82b2e5b8f193798,

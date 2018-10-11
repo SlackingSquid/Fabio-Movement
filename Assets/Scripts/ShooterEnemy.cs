@@ -19,39 +19,63 @@ public class ShooterEnemy : MonoBehaviour {
     bool canWalk = true;
     bool attakingPlayer = false;
     bool attackPlayer = true;
+    bool runningAway = false;
+
+    Vector3 goToPos;
 
     // Use this for initialization
     void Start()
     {
 
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        agent.stoppingDistance = shootingRange;
+       // agent.stoppingDistance = shootingRange;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < playerDetectionRange)
+        float disFromPlayer = Vector3.Distance(transform.position, GameManager.Instance.player.transform.position);
+        if (disFromPlayer < playerDetectionRange)
         {
-            if (Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < shootingRange)// && Vector3.Dot(transform.forward, (GameManager.Instance.player.transform.position - transform.position).normalized) > 0.3f)
+            if (!runningAway)
             {
-                attakingPlayer = true;
-                walkToPlayer = false;
+                if (disFromPlayer < shootingRange)// && Vector3.Dot(transform.forward, (GameManager.Instance.player.transform.position - transform.position).normalized) > 0.3f)
+                {
+                    if (disFromPlayer < 4f && canWalk)
+                    {
+                        Vector3 dir = new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z);
+                        goToPos = transform.position + ((transform.position - dir).normalized * 20f);
+                        runningAway = true;
+                        attakingPlayer = false;
+                        walkToPlayer = true;
+                    }
+                    else
+                    {
+                        agent.ResetPath();
+                        attakingPlayer = true;
+                        walkToPlayer = false;
+                    }
+                }
+                else
+                {
+                    attakingPlayer = false;
+                    walkToPlayer = true;
+                    goToPos = GameManager.Instance.player.transform.position;
+                }
             }
-            else 
+            else
             {
-                attakingPlayer = false;
-                walkToPlayer = true;
+                if (disFromPlayer > shootingRange  || agent.velocity.magnitude < 0.5f)
+                {
+                    runningAway = false;
+                }
             }
 
-            if (Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < 4f && canWalk)
-            {
-                agent.SetDestination(GameManager.Instance.player.transform.position + ((transform.position - GameManager.Instance.player.transform.position).normalized * 20f));
-            }
+
         }
-
+        Debug.DrawRay(goToPos, Vector3.up, Color.red, 2f);
+        Debug.Log("running away : " + runningAway + " walking : " + walkToPlayer + " can walk : " + canWalk);
         if (attakingPlayer)
         {
             if (attackPlayer && agent.velocity.magnitude < 0.5f)
@@ -70,7 +94,7 @@ public class ShooterEnemy : MonoBehaviour {
 
         if (walkToPlayer && canWalk)
         {
-            agent.SetDestination(GameManager.Instance.player.transform.position);
+            agent.SetDestination(goToPos);
             anim.SetBool("walk", true);
         }
         else
