@@ -13,7 +13,7 @@ public class ShooterEnemy : MonoBehaviour {
     public float shootingRange = 10f;
     public float attackAnimTime = 1f;
     public float ROF = 2f;
-
+    public GameObject deathEffect;
 
     bool walkToPlayer = false;
     bool canWalk = true;
@@ -82,6 +82,8 @@ public class ShooterEnemy : MonoBehaviour {
         if (HP <= 0)
         {
             Destroy(gameObject);
+            if (deathEffect != null)
+                Instantiate(deathEffect, transform.position, Quaternion.identity);
         }
 
     }

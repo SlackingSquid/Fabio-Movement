@@ -9,6 +9,7 @@ public class SimpleEnemy : MonoBehaviour {
     public GameObject attackCone;
     public int HP = 3;
     public float playerDetectionRange = 20f;
+    public GameObject deathEffect;
 
 
     bool walkToPlayer = false;
@@ -63,6 +64,8 @@ public class SimpleEnemy : MonoBehaviour {
         if(HP <= 0)
         {
             Destroy(gameObject);
+            if (deathEffect != null)
+                Instantiate(deathEffect, transform.position, Quaternion.identity);
         }
 
     }
