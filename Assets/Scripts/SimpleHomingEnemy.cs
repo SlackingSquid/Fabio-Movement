@@ -29,8 +29,8 @@ public class SimpleHomingEnemy : MonoBehaviour {
             else
                 vectorToPlayer = ((GameManager.Instance.player.transform.position + (Vector3.up*0.5f)) - transform.position).normalized;
 
-            
-            RB.velocity = transform.forward * speed;
+            Vector3 vel = new Vector3(transform.forward.x * speed, RB.velocity.y, transform.forward.z * speed);
+            RB.velocity = vel;
             
         }
 
