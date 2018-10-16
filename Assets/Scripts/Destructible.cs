@@ -19,8 +19,10 @@ public class Destructible : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+
+        LayerMask.NameToLayer("Ignore Raycast");
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
