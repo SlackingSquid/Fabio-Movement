@@ -11,6 +11,7 @@ public class SimpleHomingEnemy : MonoBehaviour {
     bool attakingOlayer = false;
     Vector3 vectorToPlayer;
     Rigidbody RB;
+    Vector3 vel;
 
     // Use this for initialization
     void Start () {
@@ -24,12 +25,17 @@ public class SimpleHomingEnemy : MonoBehaviour {
 
         if (Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < playerDetectionRange)
         {
-            if(RB.useGravity)
-                vectorToPlayer = (new Vector3(GameManager.Instance.player.transform.position.x,transform.position.y, GameManager.Instance.player.transform.position.z) - transform.position).normalized;
+            if (RB.useGravity)
+            {
+                vectorToPlayer = (new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z) - transform.position).normalized;
+                vel = new Vector3(transform.forward.x * speed, RB.velocity.y, transform.forward.z * speed);
+            }
             else
-                vectorToPlayer = ((GameManager.Instance.player.transform.position + (Vector3.up*0.5f)) - transform.position).normalized;
-
-            Vector3 vel = new Vector3(transform.forward.x * speed, RB.velocity.y, transform.forward.z * speed);
+            {
+                vectorToPlayer = ((GameManager.Instance.player.transform.position + (Vector3.up * 0.5f)) - transform.position).normalized;
+                vel = transform.forward * speed;
+            }
+            
             RB.velocity = vel;
             
         }

@@ -56,4 +56,15 @@ public class PlayerHp : MonoBehaviour {
         yield return new WaitForSeconds(time);
         canTakeDamage = true;
     }
+
+    public void GainHP(bool fullHP = false)
+    {
+        if(currentHP < maxHP)
+        {
+            if (fullHP)
+                currentHP = maxHP;
+            else
+                currentHP++;
+        }
+    }
 }

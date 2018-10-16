@@ -74,8 +74,8 @@ public class ShooterEnemy : MonoBehaviour {
 
 
         }
-        Debug.DrawRay(goToPos, Vector3.up, Color.red, 2f);
-        Debug.Log("running away : " + runningAway + " walking : " + walkToPlayer + " can walk : " + canWalk);
+        //Debug.DrawRay(goToPos, Vector3.up, Color.red, 2f);
+        //Debug.Log("running away : " + runningAway + " walking : " + walkToPlayer + " can walk : " + canWalk);
         if (attakingPlayer)
         {
             if (attackPlayer && agent.velocity.magnitude < 0.5f)

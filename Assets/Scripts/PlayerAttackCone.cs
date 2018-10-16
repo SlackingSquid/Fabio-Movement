@@ -16,7 +16,7 @@ public class PlayerAttackCone : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag != "Player" && other.gameObject.tag != "Damage")
+        if (other.gameObject.tag != "Player" && other.gameObject.tag != "Damage" && other.gameObject.tag != "SoftObject")
         {
             GameManager.Instance.player.ApplyForce(-transform.parent.forward * 6f, 0.1f);
             GameManager.Instance.cameraShake.Shake(0.1f, 0.1f, 0.2f);

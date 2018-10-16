@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 	}
 
     public CharacterMovement player;
+    public PlayerHp playerHP;
     public CameraShake cameraShake;
     public CameraFollow cameraFollow;
 
