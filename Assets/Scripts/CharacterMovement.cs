@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour {
 
-    bool takingMoveInput = true;
-    bool takingJumpInput = true;
+    [HideInInspector] public bool takingMoveInput = true;
+    [HideInInspector] public bool takingJumpInput = true;
 
     Rigidbody RB;
     public GameObject cam;
@@ -55,6 +55,8 @@ public class CharacterMovement : MonoBehaviour {
     bool isMounted = false;
     Mount currentMount;
 
+    [HideInInspector] public bool isChargeShooting = false;
+
     public PlayerAnimations playerAnim;
 
     // Use this for initialization
@@ -83,31 +85,39 @@ public class CharacterMovement : MonoBehaviour {
         if (currentFriction < maxMoveFriction)
             currentFriction = Mathf.Lerp(currentFriction, maxMoveFriction, Time.deltaTime * 1f);
 
-        if (isGrounded)
+        if (isChargeShooting)
         {
-            if (rolling)
-            {
-                vel = moveDir * rollSpeed;
-            }
-            else if (sliding)
-            {
-                Vector3 vec = Vector3.Cross(slopeVector, Vector3.up).normalized;
-                vel = (moveDir * moveInputMagnitude * slideControl * Mathf.Abs(Vector3.Dot(moveDir,vec))) + (slopeVector * slideSpeed);
-            }
-            else if (moveInputMagnitude > 0.1)
-            {
-                vel = moveDir * moveInputMagnitude * walkSpeed;
-            }
-            else
-            {
-                vel = Vector3.zero - slopeVector;
-            }
+            if(isGrounded)
+                vel = Vector3.zero;
         }
         else
         {
-            if (RB.velocity.magnitude < airControlMaxSpeed || Vector3.Dot(moveDir, RB.velocity.normalized) < 0.5f)
-                RB.AddForce(moveDir.x * airControl * moveInputMagnitude, 0f, moveDir.z * airControl * moveInputMagnitude);
-            vel = RB.velocity;
+            if (isGrounded)
+            {
+                if (rolling)
+                {
+                    vel = moveDir * rollSpeed;
+                }
+                else if (sliding)
+                {
+                    Vector3 vec = Vector3.Cross(slopeVector, Vector3.up).normalized;
+                    vel = (moveDir * moveInputMagnitude * slideControl * Mathf.Abs(Vector3.Dot(moveDir, vec))) + (slopeVector * slideSpeed);
+                }
+                else if (moveInputMagnitude > 0.1)
+                {
+                    vel = moveDir * moveInputMagnitude * walkSpeed;
+                }
+                else
+                {
+                    vel = Vector3.zero - slopeVector;
+                }
+            }
+            else
+            {
+                if (RB.velocity.magnitude < airControlMaxSpeed || Vector3.Dot(moveDir, RB.velocity.normalized) < 0.5f)
+                    RB.AddForce(moveDir.x * airControl * moveInputMagnitude, 0f, moveDir.z * airControl * moveInputMagnitude);
+                vel = RB.velocity;
+            }
         }
 
 

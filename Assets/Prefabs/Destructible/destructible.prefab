@@ -100,10 +100,11 @@ MonoBehaviour:
   hitEffect: {fileID: 0}
   deathEffect: {fileID: 1318557270576372, guid: 4b095ac22b0bfa9478f923af485e9e61,
     type: 2}
+  effectsOffset: {x: 0, y: 0, z: 0}
   canBeDamagedByEnemies: 1
   itemHolding: {fileID: 1865638954002414, guid: 35a74e4a7d915e4498b178bb8466bbf5,
     type: 2}
-  spawnOffset: {x: 0, y: 1, z: 0}
+  spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!136 &136000695856449108
 CapsuleCollider:
   m_ObjectHideFlags: 1

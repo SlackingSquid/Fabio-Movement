@@ -44,7 +44,8 @@ public class PlayerHp : MonoBehaviour {
 
     public void TakeDamage(Collider other)
     {
-        currentHP -= 1;
+        if(currentHP > 0)
+            currentHP -= 1;
         playerMovement.ApplyForce((transform.position - other.transform.position).normalized * 15f, 0f);
         GameManager.Instance.cameraShake.Shake(0.4f, 0.2f, 0.6f);
         StartCoroutine(SetInvincibleForTime(invincibilityTime));
