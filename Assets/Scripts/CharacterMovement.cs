@@ -70,6 +70,7 @@ public class CharacterMovement : MonoBehaviour {
         Jump();
         jumpCounter = 0f;
         currentFriction = maxMoveFriction;
+        currentTurnSpeed = turnSpeed;
     }
 
     // Update is called once per frame
@@ -256,7 +257,7 @@ public class CharacterMovement : MonoBehaviour {
         Vector3 inputVector = newX + newY;
 
         moveInputMagnitude = Mathf.Clamp01(inputVector.magnitude);
-        if (moveInputMagnitude > 0.1)
+        if (moveInputMagnitude > 0.15)
         {
             moveDir = inputVector.normalized;
         }
@@ -352,5 +353,14 @@ public class CharacterMovement : MonoBehaviour {
         isChargeShooting = false;
         takingJumpInput = true;
         currentTurnSpeed = turnSpeed;
+        StartCoroutine(PauseMoveInputForSeconds(0.2f));
+        moveInputMagnitude = 0f;
+    }
+
+    IEnumerator PauseMoveInputForSeconds(float time)
+    {
+        takingMoveInput = false;
+        yield return new WaitForSeconds(time);
+        takingMoveInput = true;
     }
 }

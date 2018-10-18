@@ -60,9 +60,12 @@ public class PlayersChargeShot : MonoBehaviour {
 
             if (Input.GetButtonUp("Fire3"))
             {
+                if(canCharge)
+                {
+                    GameManager.Instance.player.ExitChargeShootingMode();
+                }
                 canCharge = true;
                 LR.enabled = false;
-                GameManager.Instance.player.ExitChargeShootingMode();
                 chargePS.Stop();
             }
         }
