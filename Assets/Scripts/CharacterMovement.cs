@@ -11,6 +11,7 @@ public class CharacterMovement : MonoBehaviour {
     public GameObject cam;
     public float walkSpeed = 5f;
     public float turnSpeed = 100f;
+    float currentTurnSpeed = 100f;
     public float airControl = 20f;
     public float airControlMaxSpeed = 5f;
     float moveInputMagnitude;
@@ -56,6 +57,7 @@ public class CharacterMovement : MonoBehaviour {
     Mount currentMount;
 
     [HideInInspector] public bool isChargeShooting = false;
+    public float chargeShootingTurnSpeed = 100f;
 
     public PlayerAnimations playerAnim;
 
@@ -192,7 +194,7 @@ public class CharacterMovement : MonoBehaviour {
         }
 
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(moveDir), Time.deltaTime * turnSpeed);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(moveDir), Time.deltaTime * currentTurnSpeed);
         // transform.forward = Vector3.Lerp(transform.forward, moveDir, Time.deltaTime * 10f);
 
         //Debug.Log(RB.velocity.magnitude);
@@ -339,4 +341,16 @@ public class CharacterMovement : MonoBehaviour {
         lVel = currentMount.RB.velocity;
     }
 
+    public void EnterChargeShootingMode()
+    {
+        isChargeShooting = true;
+        takingJumpInput = false;
+        currentTurnSpeed = chargeShootingTurnSpeed;
+    }
+    public void ExitChargeShootingMode()
+    {
+        isChargeShooting = false;
+        takingJumpInput = true;
+        currentTurnSpeed = turnSpeed;
+    }
 }

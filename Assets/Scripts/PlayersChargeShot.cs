@@ -7,6 +7,7 @@ public class PlayersChargeShot : MonoBehaviour {
     public GameObject muzzlePos;
     public LineRenderer LR;
     public GameObject impactExplosion;
+    public ParticleSystem chargePS;
     public float chargeTime = 1f;
     float chargeCounter = 0f;
     bool canCharge = true;
@@ -26,8 +27,8 @@ public class PlayersChargeShot : MonoBehaviour {
             {
                 chargeCounter = 0f;
                 LR.enabled = true;
-                GameManager.Instance.player.isChargeShooting = true;
-                GameManager.Instance.player.takingJumpInput = false;
+                GameManager.Instance.player.EnterChargeShootingMode();
+                chargePS.Play();
             }
 
             if (Input.GetButton("Fire3") && canCharge)
@@ -61,8 +62,8 @@ public class PlayersChargeShot : MonoBehaviour {
             {
                 canCharge = true;
                 LR.enabled = false;
-                GameManager.Instance.player.isChargeShooting = false;
-                GameManager.Instance.player.takingJumpInput = true;
+                GameManager.Instance.player.ExitChargeShootingMode();
+                chargePS.Stop();
             }
         }
 
@@ -76,7 +77,6 @@ public class PlayersChargeShot : MonoBehaviour {
         chargeCounter = 0f;
         LR.enabled = false;
         canCharge = false;
-        GameManager.Instance.player.isChargeShooting = false;
-        GameManager.Instance.player.takingJumpInput = true;
+        GameManager.Instance.player.ExitChargeShootingMode();
     }
 }
