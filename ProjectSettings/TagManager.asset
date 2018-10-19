@@ -8,6 +8,7 @@ TagManager:
   - PlayerDamage
   - Enemy
   - SoftObject
+  - Trigger
   layers:
   - Default
   - TransparentFX

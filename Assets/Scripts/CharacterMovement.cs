@@ -11,7 +11,7 @@ public class CharacterMovement : MonoBehaviour {
     public GameObject cam;
     public float walkSpeed = 5f;
     public float turnSpeed = 100f;
-    float currentTurnSpeed = 100f;
+    [HideInInspector] public float currentTurnSpeed = 100f;
     public float airControl = 20f;
     public float airControlMaxSpeed = 5f;
     float moveInputMagnitude;
@@ -346,7 +346,7 @@ public class CharacterMovement : MonoBehaviour {
     {
         isChargeShooting = true;
         takingJumpInput = false;
-        currentTurnSpeed = chargeShootingTurnSpeed;
+        //currentTurnSpeed = chargeShootingTurnSpeed;
     }
     public void ExitChargeShootingMode()
     {

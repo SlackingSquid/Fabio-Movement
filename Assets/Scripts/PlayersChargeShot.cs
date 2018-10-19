@@ -40,12 +40,23 @@ public class PlayersChargeShot : MonoBehaviour {
                     LR.SetPosition(0, muzzlePos.transform.position);
                     LR.SetPosition(1, hit.point);
                     explosionPos = hit.point;
+
+                    if (hit.collider.gameObject.tag == "Trigger" || hit.collider.gameObject.tag == "Enemy")
+                    {
+                        GameManager.Instance.player.currentTurnSpeed = GameManager.Instance.player.chargeShootingTurnSpeed;
+                    }
+                    else
+                    {
+                        GameManager.Instance.player.currentTurnSpeed = GameManager.Instance.player.turnSpeed;
+                    }
                 }
                 else
                 {
                     LR.SetPosition(0, muzzlePos.transform.position);
                     LR.SetPosition(1, muzzlePos.transform.position + (transform.forward * 20f));
                     explosionPos = muzzlePos.transform.position + (transform.forward * 20f);
+
+                    GameManager.Instance.player.currentTurnSpeed = GameManager.Instance.player.turnSpeed;
                 }
 
                 if (chargeCounter >= chargeTime)
