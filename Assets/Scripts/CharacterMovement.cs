@@ -332,14 +332,14 @@ public class CharacterMovement : MonoBehaviour {
     }
     void DismountPlayer()
     {
+        RB.isKinematic = false;
+        lVel = currentMount.RB.velocity;
         currentMount.PlayerDismounting();
         transform.parent = null;
         transform.position += Vector3.up;
         takingMoveInput = true;
-        RB.isKinematic = false;
         isMounted = false;
         playerCollision.SetActive(true);
-        lVel = currentMount.RB.velocity;
     }
 
     public void EnterChargeShootingMode()

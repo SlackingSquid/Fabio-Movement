@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bumper : MonoBehaviour {
 
+    public bool forceJump = true;
+    public bool bump = true;
     public float force = 50f;
     public float friction = 0f;
 	// Use this for initialization
@@ -20,7 +22,10 @@ public class Bumper : MonoBehaviour {
         
         if (collision.gameObject.GetComponent<CharacterMovement>())
         {
-            collision.gameObject.GetComponent<CharacterMovement>().ApplyForce((collision.gameObject.transform.position - transform.position).normalized * force, friction);
+            if(bump)
+                collision.gameObject.GetComponent<CharacterMovement>().ApplyForce((collision.gameObject.transform.position - transform.position).normalized * force, friction);
+            if (forceJump)
+                collision.gameObject.GetComponent<CharacterMovement>().Jump();
         }
     }
 }
