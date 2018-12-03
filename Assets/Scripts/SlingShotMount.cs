@@ -53,6 +53,8 @@ public class SlingShotMount : Mount {
 
             if (Vector3.Distance(transform.position, toPoint.transform.position) < 0.2f)
             {
+                GameManager.Instance.player.Jump();
+                GameManager.Instance.player.ApplyForce(RB.velocity, 0f);
                 going = false;
             }
         }
@@ -70,4 +72,5 @@ public class SlingShotMount : Mount {
         RB.velocity = vec * vel;
 
     }
+
 }
