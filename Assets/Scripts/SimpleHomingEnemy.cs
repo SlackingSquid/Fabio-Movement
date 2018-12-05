@@ -8,7 +8,6 @@ public class SimpleHomingEnemy : MonoBehaviour {
     public float speed = 8f;
     public float rotationSpeed = 10f;
     public float playerDetectionRange = 20f;
-    bool attakingOlayer = false;
     Vector3 vectorToPlayer;
     Rigidbody RB;
     Vector3 vel;

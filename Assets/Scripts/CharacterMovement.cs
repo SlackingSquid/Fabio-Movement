@@ -169,7 +169,7 @@ public class CharacterMovement : MonoBehaviour {
             if (leftground) // happenes on landing
             {
                 if (jumpCounter < 0.2f)
-                    GameManager.Instance.cameraShake.Shake(0.2f, 0.2f, 0.8f);
+                    GameManager.Instance.cameraShake.Shake(0.2f, 0.2f, 0.6f);
                 //jumpVel = 0f;
                 jumpCounter = 0f;
                 hasJumped = false;
