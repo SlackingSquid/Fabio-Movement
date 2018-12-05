@@ -7,6 +7,12 @@ public class PlayerAnimations : MonoBehaviour {
     public Animator anim;
     bool playRollAnim = true;
 
+
+    float accelSecDer = 0f;
+
+    float prevVel = 0f;
+
+
 	// Use this for initialization
 	void Start () {
 		
@@ -33,6 +39,34 @@ public class PlayerAnimations : MonoBehaviour {
             }
         }
 
+        anim.SetFloat("running", GameManager.Instance.player.RB.velocity.magnitude / GameManager.Instance.player.walkSpeed * 3f);
+
+        anim.SetFloat("runTilt", accelSecDer * 2f);
+
+
+        if(GameManager.Instance.player.isGrounded)
+        {
+            if (!anim.GetBool("onGround"))
+            {
+                anim.SetBool("onGround", true);
+            }
+        }
+        else
+        {
+            if (anim.GetBool("onGround"))
+            {
+                anim.SetBool("onGround", false);
+            }
+            anim.SetFloat("jumpVel", GameManager.Instance.player.RB.velocity.y);
+        }
+        
+
+    }
+
+    private void FixedUpdate()
+    {
+        accelSecDer = prevVel - GameManager.Instance.player.RB.velocity.magnitude;
+        prevVel = GameManager.Instance.player.RB.velocity.magnitude;
     }
 
     public void Attack()

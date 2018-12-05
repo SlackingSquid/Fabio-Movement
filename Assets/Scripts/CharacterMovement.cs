@@ -7,14 +7,14 @@ public class CharacterMovement : MonoBehaviour {
     [HideInInspector] public bool takingMoveInput = true;
     [HideInInspector] public bool takingJumpInput = true;
 
-    Rigidbody RB;
+    [HideInInspector] public Rigidbody RB;
     public GameObject cam;
     public float walkSpeed = 5f;
     public float turnSpeed = 100f;
     [HideInInspector] public float currentTurnSpeed = 100f;
     public float airControl = 20f;
     public float airControlMaxSpeed = 5f;
-    float moveInputMagnitude;
+    [HideInInspector] public float moveInputMagnitude;
     Vector3 moveDir;
 
     public AnimationCurve jumpCurve;
