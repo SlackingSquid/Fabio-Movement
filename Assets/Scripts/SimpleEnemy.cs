@@ -10,6 +10,9 @@ public class SimpleEnemy : MonoBehaviour {
     public int HP = 3;
     public float playerDetectionRange = 20f;
     public GameObject deathEffect;
+    public float rateOfAttack = 2f;
+    public float attackRange = 3f;
+    public float recoveryTime = 2f;
 
 
     bool walkToPlayer = false;
@@ -29,7 +32,7 @@ public class SimpleEnemy : MonoBehaviour {
 
         if(Vector3.Distance(transform.position,GameManager.Instance.player.transform.position) < playerDetectionRange)
         {
-            if(Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < 3f && Vector3.Dot(transform.forward,(GameManager.Instance.player.transform.position - transform.position).normalized) > 0.3f)
+            if(Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) < attackRange && Vector3.Dot(transform.forward,(GameManager.Instance.player.transform.position - transform.position).normalized) > 0.3f)
             {
                 attakingPlayer = true;
                 walkToPlayer = false;
@@ -74,7 +77,7 @@ public class SimpleEnemy : MonoBehaviour {
     {
         anim.SetTrigger("attack");
         canWalk = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(rateOfAttack);
         attackPlayer = true;
         canWalk = true;
     }
@@ -85,7 +88,7 @@ public class SimpleEnemy : MonoBehaviour {
         canWalk = false;
         agent.SetDestination(transform.position);
         anim.SetTrigger("gotHit");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(recoveryTime);
         canWalk = true;
     }
 
