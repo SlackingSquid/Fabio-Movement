@@ -12,6 +12,8 @@ public class SimpleHomingEnemy : MonoBehaviour {
     Rigidbody RB;
     Vector3 vel;
 
+    public GameObject gotHitEffect;
+
     // Use this for initialization
     void Start () {
 
@@ -58,6 +60,9 @@ public class SimpleHomingEnemy : MonoBehaviour {
             HP -= 1;
             Vector3 dir = -transform.forward;
             transform.forward = dir;
+
+            if (gotHitEffect != null)
+                Instantiate(gotHitEffect, transform.position, Quaternion.identity);
         }
     }
 }

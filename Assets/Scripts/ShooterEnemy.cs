@@ -21,6 +21,8 @@ public class ShooterEnemy : MonoBehaviour {
     bool attackPlayer = true;
     bool runningAway = false;
 
+    public GameObject gotHitEffect;
+
     Vector3 goToPos;
 
     // Use this for initialization
@@ -127,6 +129,9 @@ public class ShooterEnemy : MonoBehaviour {
     IEnumerator GotHit()
     {
         //anim.SetTrigger("attack");
+        if (gotHitEffect != null)
+            Instantiate(gotHitEffect, transform.position, Quaternion.identity);
+
         canWalk = false;
         agent.SetDestination(transform.position);
         anim.SetTrigger("gotHit");

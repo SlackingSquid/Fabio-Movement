@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerAminationEvents : MonoBehaviour {
 
     public GameObject attackCone;
+    public ParticleSystem slash01;
+    public ParticleSystem slash02;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -22,5 +24,14 @@ public class PlayerAminationEvents : MonoBehaviour {
         attackCone.SetActive(true);
         yield return new WaitForFixedUpdate();
         attackCone.SetActive(false);
+    }
+
+    public void ActivateSlashEffect01()
+    {
+        slash01.Play();
+    }
+    public void ActivateSlashEffect02()
+    {
+        slash02.Play();
     }
 }

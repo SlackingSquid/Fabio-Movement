@@ -650,6 +650,11 @@ MonoBehaviour:
   playerDetectionRange: 20
   deathEffect: {fileID: 1253988984898258, guid: f1972573ce538f84b82b2e5b8f193798,
     type: 2}
+  rateOfAttack: 2
+  attackRange: 3
+  recoveryTime: 2
+  gotHitEffect: {fileID: 1130378836250352, guid: 073c51cd8b564fc4ab97cc3c77392d76,
+    type: 2}
 --- !u!136 &136250410482188676
 CapsuleCollider:
   m_ObjectHideFlags: 1

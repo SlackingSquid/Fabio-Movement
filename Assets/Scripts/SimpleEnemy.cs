@@ -20,6 +20,8 @@ public class SimpleEnemy : MonoBehaviour {
     bool attakingPlayer = false;
     bool attackPlayer = true;
 
+    public GameObject gotHitEffect;
+
     // Use this for initialization
     void Start () {
 
@@ -85,6 +87,9 @@ public class SimpleEnemy : MonoBehaviour {
     IEnumerator GotHit()
     {
         //anim.SetTrigger("attack");
+        if (gotHitEffect != null)
+            Instantiate(gotHitEffect, transform.position, Quaternion.identity);
+
         canWalk = false;
         agent.SetDestination(transform.position);
         anim.SetTrigger("gotHit");

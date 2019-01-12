@@ -653,6 +653,8 @@ MonoBehaviour:
   rateOfAttack: 1
   attackRange: 5
   recoveryTime: 2
+  gotHitEffect: {fileID: 1130378836250352, guid: 073c51cd8b564fc4ab97cc3c77392d76,
+    type: 2}
 --- !u!136 &136309299244233168
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -352,6 +352,8 @@ MonoBehaviour:
   speed: 6
   rotationSpeed: 4
   playerDetectionRange: 20
+  gotHitEffect: {fileID: 1130378836250352, guid: 073c51cd8b564fc4ab97cc3c77392d76,
+    type: 2}
 --- !u!135 &135003283760826390
 SphereCollider:
   m_ObjectHideFlags: 1
