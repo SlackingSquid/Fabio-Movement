@@ -28617,6 +28617,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 224146855841269342, guid: 7414ec2aed80acb46bdce5986be70159,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 902036605, guid: 7414ec2aed80acb46bdce5986be70159, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5426e9829a9c0de4da323fff4e4f8824, type: 2}
+    - target: {fileID: 455434036, guid: 7414ec2aed80acb46bdce5986be70159, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 283806570, guid: 7414ec2aed80acb46bdce5986be70159, type: 3}
+      propertyPath: m_CapsuleColliders.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7414ec2aed80acb46bdce5986be70159, type: 3}
 --- !u!1001 &1958196812
