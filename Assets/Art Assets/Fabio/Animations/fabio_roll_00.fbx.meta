@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 300d5107344d18f47832d2092161535a
+guid: 6bf7b77d2a360524296d23636021402e
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -32,6 +32,7 @@ ModelImporter:
     100052: hair
     100054: LeftMount
     100056: RightMount
+    100058: sword_loc
     400000: body
     400002: fabio
     400004: //RootNode
@@ -61,15 +62,18 @@ ModelImporter:
     400052: hair
     400054: LeftMount
     400056: RightMount
+    400058: sword_loc
     2100000: lambert1
     4300000: hair
     4300002: body
+    7400000: fabio_roll_00
     9500000: //RootNode
     13700000: body
     13700002: hair
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -82,7 +86,21 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'FabioRig_LeftLeg' has translation animation
+      that will be discarded.\n\t'FabioRig_LeftFoot' has translation animation that
+      will be discarded.\n\t'FabioRig_RightLeg' has translation animation that will
+      be discarded.\n\t'FabioRig_RightFoot' has translation animation that will be
+      discarded.\n\t'FabioRig_RightToeBase' has translation animation that will be
+      discarded.\n\t'FabioRig_Spine' has translation animation that will be discarded.\n\t'FabioRig_LeftArm'
+      has translation animation that will be discarded.\n\t'FabioRig_LeftForeArm'
+      has translation animation that will be discarded.\n\t'FabioRig_LeftHand' has
+      translation animation that will be discarded.\n\t'FabioRig_RightForeArm' has
+      translation animation that will be discarded.\n\t'FabioRig_RightHand' has translation
+      animation that will be discarded.\n\t'FabioRig_Neck' has translation animation
+      that will be discarded.\n\t'FabioRig_Head' has translation animation that will
+      be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -94,7 +112,35 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: fabio_roll_00
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 12
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -135,13 +181,13 @@ ModelImporter:
     serializedVersion: 2
     human: []
     skeleton:
-    - name: fabio_character(Clone)
+    - name: fabio_roll_00(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: fabio
-      parentName: fabio_character(Clone)
+      parentName: fabio_roll_00(Clone)
       position: {x: 0.000000037336434, y: 1.0483973, z: 0.09957587}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 0.01, y: 0.01, z: 0.01}
@@ -156,14 +202,14 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: FabioRig_Reference
-      parentName: fabio_character(Clone)
+      parentName: fabio_roll_00(Clone)
       position: {x: 0.000000029802322, y: 0, z: 0.105898395}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 0.01, y: 0.01, z: 0.01}
     - name: RightMount
       parentName: FabioRig_Reference
-      position: {x: -0.0000029802322, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
+      position: {x: 29.027725, y: 17.045578, z: 9.814907}
+      rotation: {x: -0.6112747, y: 0.6725169, z: 0.29319027, w: 0.29682276}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftMount
       parentName: FabioRig_Reference
@@ -172,114 +218,119 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: FabioRig_Hips
       parentName: FabioRig_Reference
-      position: {x: -0.00000011920929, y: 79.497955, z: -1.9688754}
+      position: {x: -0.00000011920929, y: 26.670593, z: -39.643555}
       rotation: {x: 0.5185067, y: -0.48078147, z: -0.5185067, w: 0.48078147}
       scale: {x: 1, y: 1, z: 1}
     - name: FabioRig_Spine
       parentName: FabioRig_Hips
       position: {x: -14.633793, y: -0.00000058937167, z: -4.2351647e-22}
-      rotation: {x: 0, y: 0, z: 0.05627846, w: 0.9984151}
-      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: 0, y: -0, z: -0.3898032, w: 0.9208982}
+      scale: {x: 1, y: 0.9999999, z: 0.9999999}
     - name: FabioRig_Spine1
       parentName: FabioRig_Spine
-      position: {x: -13.964759, y: 0.0000006966873, z: -2.6134609e-16}
-      rotation: {x: 0, y: 0, z: 0.03884888, w: 0.9992451}
-      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000002}
+      position: {x: -13.964759, y: -0.0000014307576, z: 1.669637e-15}
+      rotation: {x: 0, y: -0, z: -0.18839122, w: 0.9820941}
+      scale: {x: 1.0000001, y: 1, z: 1.0000001}
     - name: FabioRig_Spine2
       parentName: FabioRig_Spine1
-      position: {x: -15.530339, y: -0.0000010657308, z: -4.8929875e-16}
-      rotation: {x: 0, y: 0, z: 0.12108461, w: 0.9926422}
+      position: {x: -15.53034, y: 0.0000017862718, z: 2.3912134e-15}
+      rotation: {x: 0, y: -0, z: -0.10679583, w: 0.994281}
       scale: {x: 1, y: 1, z: 1}
     - name: FabioRig_LeftShoulder
       parentName: FabioRig_Spine2
-      position: {x: -8.706335, y: -2.7635093, z: 15.706695}
-      rotation: {x: -0.34901047, y: 0.61497295, z: 0.45388997, w: 0.54220283}
-      scale: {x: 1, y: 1, z: 1}
+      position: {x: -8.706335, y: -2.763513, z: 15.706698}
+      rotation: {x: -0.485056, y: 0.63542825, z: 0.32726523, w: 0.50383437}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000001}
     - name: FabioRig_LeftArm
       parentName: FabioRig_LeftShoulder
-      position: {x: -16.93152, y: 0.000009166636, z: -1.0214052e-14}
-      rotation: {x: 0.7220087, y: 0.20093055, z: 0.24341993, w: 0.6156924}
-      scale: {x: 1.0000001, y: 1, z: 1}
+      position: {x: -16.93152, y: 0.000008060712, z: 0.0000005476288}
+      rotation: {x: 0.4030037, y: 0.38039312, z: -0.37281427, w: 0.74424374}
+      scale: {x: 1.0000001, y: 1.0000002, z: 0.9999999}
     - name: FabioRig_LeftForeArm
       parentName: FabioRig_LeftArm
-      position: {x: -36.36342, y: 0.0009820211, z: -0.00057246874}
-      rotation: {x: 0.0000017588592, y: -0.000012100309, z: -0.16113311, w: 0.9869327}
-      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000001}
+      position: {x: -36.363403, y: 0.00007646617, z: -0.00001857376}
+      rotation: {x: -0.000018397463, y: -0.000026069038, z: -0.776699, w: 0.6298719}
+      scale: {x: 1, y: 0.99999976, z: 0.9999999}
     - name: FabioRig_LeftHand
       parentName: FabioRig_LeftForeArm
-      position: {x: -28.471338, y: 0.00000026253568, z: -0.0000050379513}
-      rotation: {x: 0, y: 0.0000008629151, z: -0, w: 1}
-      scale: {x: 0.99999994, y: 1, z: 0.99999994}
+      position: {x: -28.47133, y: 0.0000037152981, z: -0.0000070739893}
+      rotation: {x: 0.000018347106, y: 0.00000089455483, z: -1.6412493e-11, w: 1}
+      scale: {x: 1, y: 1.0000001, z: 1}
     - name: FabioRig_RightShoulder
       parentName: FabioRig_Spine2
-      position: {x: -8.706335, y: -2.7635093, z: -15.706695}
-      rotation: {x: 0.61497295, y: 0.34901047, z: -0.54220283, w: 0.45388997}
-      scale: {x: 1, y: 1, z: 1}
+      position: {x: -8.706335, y: -2.763513, z: -15.706698}
+      rotation: {x: 0.5761751, y: 0.6101332, z: -0.513605, w: 0.17880073}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000001}
     - name: FabioRig_RightArm
       parentName: FabioRig_RightShoulder
-      position: {x: 16.931522, y: -0.00000950956, z: 7.5495166e-15}
-      rotation: {x: 0.7220125, y: 0.20094499, z: 0.2433939, w: 0.61569345}
-      scale: {x: 1.0000001, y: 1, z: 1}
+      position: {x: 16.931524, y: -0.000009475825, z: -0.0000006723311}
+      rotation: {x: 0.4208739, y: 0.18659955, z: 0.044749767, w: 0.8865908}
+      scale: {x: 1, y: 0.9999999, z: 1}
     - name: FabioRig_RightForeArm
       parentName: FabioRig_RightArm
-      position: {x: 36.36341, y: 0.00052448193, z: -0.00029509858}
-      rotation: {x: 0.00000148559, y: -0.000009523289, z: -0.16110735, w: 0.9869369}
-      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
+      position: {x: 36.363415, y: -0.00075937796, z: -0.0011701834}
+      rotation: {x: 0.000032963377, y: -0.000005951085, z: 0.9321711, w: -0.36201802}
+      scale: {x: 1, y: 0.9999999, z: 1.0000001}
     - name: FabioRig_RightHand
       parentName: FabioRig_RightForeArm
-      position: {x: 28.471329, y: -0.0000011134254, z: -0.00000028943327}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 0.9999999, y: 1, z: 1}
+      position: {x: 28.471333, y: -0.000004320169, z: 0.000004759769}
+      rotation: {x: 0.34398794, y: -0.048649326, z: 0.59710723, w: 0.72302735}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000002}
+    - name: sword_loc
+      parentName: FabioRig_RightHand
+      position: {x: 8.210411, y: 1.1162288, z: -5.5580187}
+      rotation: {x: -0.6589643, y: 0.053596046, z: 0.73920894, w: -0.12831144}
+      scale: {x: 1, y: 1, z: 1}
     - name: FabioRig_Neck
       parentName: FabioRig_Spine2
-      position: {x: -16.625814, y: 0.000002571017, z: -1.1620047e-15}
-      rotation: {x: 0, y: 0, z: -0.08181431, w: 0.9966476}
-      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000002}
+      position: {x: -16.625816, y: -0.0000039399906, z: 2.725539e-15}
+      rotation: {x: 0, y: -0, z: -0.08181431, w: 0.9966476}
+      scale: {x: 1.0000001, y: 1, z: 1.0000001}
     - name: FabioRig_Head
       parentName: FabioRig_Neck
-      position: {x: -11.085463, y: 0.00000058521175, z: -4.9114443e-16}
+      position: {x: -11.08549, y: 0.00000620862, z: 1.8459457e-15}
       rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000002}
+      scale: {x: 1.0000001, y: 1, z: 1.0000001}
     - name: FabioRig_LeftUpLeg
       parentName: FabioRig_Hips
       position: {x: 5.8762574, y: 1.6769692, z: 11.236616}
-      rotation: {x: -0.055226143, y: -0.23826973, z: 0.9683182, w: -0.05037375}
-      scale: {x: 1, y: 0.99999994, z: 1}
+      rotation: {x: 0.10786795, y: 0.119047515, z: -0.22551243, w: 0.96090394}
+      scale: {x: 1, y: 1, z: 1}
     - name: FabioRig_LeftLeg
       parentName: FabioRig_LeftUpLeg
-      position: {x: -32.380863, y: -0.00005642066, z: -0.000036809804}
-      rotation: {x: 0.1094132, y: -0.015618818, z: -0.14037403, w: 0.98391056}
-      scale: {x: 1, y: 1, z: 1.0000001}
+      position: {x: -32.38081, y: -0.000008687119, z: -0.00000037197248}
+      rotation: {x: -0.022127477, y: 0.07596845, z: 0.9570595, w: -0.2788842}
+      scale: {x: 1, y: 1.0000001, z: 1}
     - name: FabioRig_LeftFoot
       parentName: FabioRig_LeftLeg
-      position: {x: -31.674994, y: 0.000009566871, z: -0.000005765725}
-      rotation: {x: 0.06954849, y: -0.025551137, z: 0.59380215, w: 0.8011924}
-      scale: {x: 1.0000001, y: 1, z: 1}
+      position: {x: -31.67504, y: -0.000005983624, z: -0.000008196837}
+      rotation: {x: 0.092889324, y: 0.06634298, z: 0.77657384, w: 0.6195993}
+      scale: {x: 1.0000001, y: 1, z: 1.0000001}
     - name: FabioRig_LeftToeBase
       parentName: FabioRig_LeftFoot
-      position: {x: -18.87724, y: 0.0000037177867, z: 0.000013509139}
+      position: {x: -18.877232, y: -0.0000043380846, z: 0.000010959274}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1.0000001, y: 1, z: 1.0000001}
     - name: FabioRig_RightUpLeg
       parentName: FabioRig_Hips
       position: {x: 5.8762574, y: 1.6769692, z: -11.236616}
-      rotation: {x: -0.23790379, y: 0.05519131, z: 0.05036378, w: 0.9684107}
-      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000002}
+      rotation: {x: -0.118666746, y: 0.10789316, z: 0.9609357, w: 0.22556561}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
     - name: FabioRig_RightLeg
       parentName: FabioRig_RightUpLeg
-      position: {x: 32.380817, y: 0.00016544817, z: 0.00010504837}
-      rotation: {x: 0.10920407, y: -0.015583557, z: -0.14037497, w: 0.9839342}
-      scale: {x: 1.0000001, y: 1, z: 1.0000001}
+      position: {x: 32.38081, y: -0.000005959282, z: -0.000000024693533}
+      rotation: {x: -0.02209324, y: 0.07583142, z: 0.9570704, w: -0.2788865}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
     - name: FabioRig_RightFoot
       parentName: FabioRig_RightLeg
-      position: {x: 31.675018, y: -0.000003628429, z: 0.0000018639639}
-      rotation: {x: 0.069375224, y: -0.025505928, z: 0.5938196, w: 0.80119586}
-      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000001}
+      position: {x: 31.674994, y: -0.0000016244111, z: 0.000006181587}
+      rotation: {x: 0.09260647, y: 0.06608672, z: 0.7766495, w: 0.6195742}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
     - name: FabioRig_RightToeBase
       parentName: FabioRig_RightFoot
-      position: {x: 18.877249, y: 0.000007732749, z: 0.00000020583207}
+      position: {x: 18.87722, y: 0.000003749127, z: 0.0000014540512}
       rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1.0000001}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5

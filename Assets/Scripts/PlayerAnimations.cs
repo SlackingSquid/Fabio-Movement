@@ -10,6 +10,7 @@ public class PlayerAnimations : MonoBehaviour {
 
     float accelSecDer = 0f;
 
+    float accelSecDerLerp;
     float prevVel = 0f;
 
 
@@ -41,7 +42,8 @@ public class PlayerAnimations : MonoBehaviour {
 
         anim.SetFloat("running", GameManager.Instance.player.RB.velocity.magnitude / GameManager.Instance.player.walkSpeed * 3f);
 
-        anim.SetFloat("runTilt", accelSecDer * 2f);
+        accelSecDerLerp = Mathf.Lerp(accelSecDerLerp, accelSecDer, Time.deltaTime * 5f);
+        anim.SetFloat("runTilt", accelSecDerLerp * 5f);
 
 
         if(GameManager.Instance.player.isGrounded)

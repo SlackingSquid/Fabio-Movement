@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 71768a222ad47a144a903ad0b66adf45
+guid: a1c46b3f530015646b3b56203dbd2238
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -66,13 +66,13 @@ ModelImporter:
     2100000: lambert1
     4300000: hair
     4300002: body
-    7400000: fabio_idle_00
+    7400000: fabio_run_decelerate_00
     9500000: //RootNode
     13700000: body
     13700002: hair
   externalObjects: {}
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -99,10 +99,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: fabio_idle_00
+      name: fabio_run_decelerate_00
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 120
+      lastFrame: 22
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
