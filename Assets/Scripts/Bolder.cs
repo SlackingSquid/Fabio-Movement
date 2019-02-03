@@ -41,7 +41,7 @@ public class Bolder : MonoBehaviour {
     {
         if (other.gameObject.tag == "PlayerDamage")
         {
-            RB.velocity = ((transform.position - other.transform.position).normalized * 8f) + (Vector3.up * 2f);
+            RB.velocity = ((transform.position - (GameManager.Instance.player.transform.position + new Vector3(0f,0.5f,0f))).normalized * 8f) + (Vector3.up * 2f);
         }
     }
 }

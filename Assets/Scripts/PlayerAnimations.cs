@@ -61,7 +61,8 @@ public class PlayerAnimations : MonoBehaviour {
             {
                 anim.SetBool("onGround", false);
             }
-            anim.SetFloat("jumpVel", GameManager.Instance.player.RB.velocity.y);
+            float horMoveMag = new Vector3(GameManager.Instance.player.RB.velocity.x, 0f, GameManager.Instance.player.RB.velocity.z).magnitude / GameManager.Instance.player.walkSpeed;
+            anim.SetFloat("jumpVel", (GameManager.Instance.player.RB.velocity.y*0.1f) * horMoveMag);
         }
         
 

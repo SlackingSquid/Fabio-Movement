@@ -19,11 +19,11 @@ public class PlayerAminationEvents : MonoBehaviour {
 		
 	}
 
-    public IEnumerator ActivateAttackCone()
+    public IEnumerator ActivateAttackCone(float time)
     {
         attackCone.SetActive(true);
-        yield return new WaitForFixedUpdate();
-        //yield return new WaitForSeconds(0.2f);
+        //yield return new WaitForFixedUpdate();
+        yield return new WaitForSeconds(time);
         attackCone.SetActive(false);
     }
 

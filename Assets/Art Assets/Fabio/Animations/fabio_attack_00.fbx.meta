@@ -123,11 +123,11 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.36363637
+      - time: 0.22482617
         functionName: ActivateAttackCone
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
+        floatParameter: 0.15
         intParameter: 0
         messageOptions: 0
       - time: 0.2831169
@@ -165,15 +165,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.37688085
-        functionName: ActivateSlashEffect02
+      - time: 0.28246197
+        functionName: ActivateAttackCone
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
+        floatParameter: 0.15
         intParameter: 0
         messageOptions: 0
-      - time: 0.43543646
-        functionName: ActivateAttackCone
+      - time: 0.37688085
+        functionName: ActivateSlashEffect02
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
