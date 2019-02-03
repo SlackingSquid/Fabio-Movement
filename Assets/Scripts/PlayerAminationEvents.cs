@@ -23,6 +23,7 @@ public class PlayerAminationEvents : MonoBehaviour {
     {
         attackCone.SetActive(true);
         yield return new WaitForFixedUpdate();
+        //yield return new WaitForSeconds(0.2f);
         attackCone.SetActive(false);
     }
 

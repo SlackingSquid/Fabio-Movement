@@ -484,7 +484,7 @@ MonoBehaviour:
   HorRotSpeed: 120
   VerRotSpeed: 80
   invertY: 0
-  cameraMaxDistance: 10
+  cameraMaxDistance: 8
 --- !u!1 &1838634725765876
 GameObject:
   m_ObjectHideFlags: 0

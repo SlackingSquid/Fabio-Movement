@@ -106,7 +106,7 @@ public class CharacterMovement : MonoBehaviour {
                     Vector3 vec = Vector3.Cross(slopeVector, Vector3.up).normalized;
                     vel = (moveDir * moveInputMagnitude * slideControl * Mathf.Abs(Vector3.Dot(moveDir, vec))) + (slopeVector * slideSpeed);
                 }
-                else if (moveInputMagnitude > 0.1)
+                else if (moveInputMagnitude > 0.6)
                 {
                     vel = moveDir * moveInputMagnitude * walkSpeed;
                 }
@@ -194,8 +194,8 @@ public class CharacterMovement : MonoBehaviour {
             playerAnim.Attack();
         }
 
-
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(moveDir), Time.deltaTime * currentTurnSpeed);
+        if (moveInputMagnitude > 0.3)
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(moveDir), Time.deltaTime * currentTurnSpeed);
         // transform.forward = Vector3.Lerp(transform.forward, moveDir, Time.deltaTime * 10f);
 
         //Debug.Log(RB.velocity.magnitude);

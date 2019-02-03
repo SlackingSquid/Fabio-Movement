@@ -40,6 +40,8 @@ public class PlayerAnimations : MonoBehaviour {
             }
         }
 
+        anim.SetBool("invincible", !GameManager.Instance.playerHP.canTakeDamage);
+
         anim.SetFloat("running", GameManager.Instance.player.RB.velocity.magnitude / GameManager.Instance.player.walkSpeed * 3f);
 
         accelSecDerLerp = Mathf.Lerp(accelSecDerLerp, accelSecDer, Time.deltaTime * 5f);
