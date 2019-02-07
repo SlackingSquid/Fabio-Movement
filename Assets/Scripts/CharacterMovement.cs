@@ -61,6 +61,8 @@ public class CharacterMovement : MonoBehaviour {
 
     public PlayerAnimations playerAnim;
 
+    bool canAirAttack = true;
+
     // Use this for initialization
     void Start() {
 
@@ -173,6 +175,7 @@ public class CharacterMovement : MonoBehaviour {
                 //jumpVel = 0f;
                 jumpCounter = 0f;
                 hasJumped = false;
+                canAirAttack = true;
             }
             leftground = false;
         }
@@ -191,7 +194,17 @@ public class CharacterMovement : MonoBehaviour {
 
         if(Input.GetButtonDown("Fire1") && !rolling)
         {
-            playerAnim.Attack();
+            //playerAnim.Attack();
+            if(!isGrounded && canAirAttack)
+            {
+                jumpCounter = 0.8f;
+                canAirAttack = false;
+                playerAnim.Attack();
+            }
+            else if(isGrounded)
+            {
+                playerAnim.Attack();
+            }
         }
 
         if (moveInputMagnitude > 0.3)
