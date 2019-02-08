@@ -25,7 +25,7 @@ public class Bumper : MonoBehaviour {
             if(bump)
                 collision.gameObject.GetComponent<CharacterMovement>().ApplyForce((collision.gameObject.transform.position - transform.position).normalized * force, friction);
             if (forceJump)
-                collision.gameObject.GetComponent<CharacterMovement>().Jump();
+                collision.gameObject.GetComponent<CharacterMovement>().RB.AddForce(Vector3.up * 30f, ForceMode.Impulse);
         }
     }
 }

@@ -29,6 +29,16 @@ public class CharacterMovement : MonoBehaviour {
     [HideInInspector] public bool isGrounded = false;
     [HideInInspector] public bool leftground = false;
 
+    // new jump stuff
+    float jumpGravMul = 4f;
+    float fallGravMul = 4f;
+    float holdJumpGravMul = 2f;
+    float jumpheightGravMul = 0f;
+    float currentJumpGravMul = 2f;
+    float jumpForce = 15f;
+    float rollJumpForce = 8f;
+    float currentJumpForce = 15f;
+
     Vector3 vel;
     Vector3 lVel;
 
@@ -102,19 +112,28 @@ public class CharacterMovement : MonoBehaviour {
                 if (rolling)
                 {
                     vel = moveDir * rollSpeed;
+                    jumpVel = RB.velocity.y;
                 }
+
                 else if (sliding)
                 {
                     Vector3 vec = Vector3.Cross(slopeVector, Vector3.up).normalized;
                     vel = (moveDir * moveInputMagnitude * slideControl * Mathf.Abs(Vector3.Dot(moveDir, vec))) + (slopeVector * slideSpeed);
-                }
-                else if (moveInputMagnitude > 0.6)
-                {
-                    vel = moveDir * moveInputMagnitude * walkSpeed;
+                    //jumpVel = RB.velocity.y + (slopeVector.y * slideSpeed);
+                    jumpVel = RB.velocity.y;
                 }
                 else
                 {
-                    vel = Vector3.zero - slopeVector;
+                    if (moveInputMagnitude > 0.6)
+                    {
+                        vel = moveDir * moveInputMagnitude * walkSpeed;
+                        //jumpVel = RB.velocity.y;
+                    }
+                    else
+                    {
+                        vel = Vector3.zero - (slopeVector * 1.6f);
+                    }
+                    jumpVel = RB.velocity.y;
                 }
             }
             else
@@ -122,6 +141,7 @@ public class CharacterMovement : MonoBehaviour {
                 if (RB.velocity.magnitude < airControlMaxSpeed || Vector3.Dot(moveDir, RB.velocity.normalized) < 0.5f)
                     RB.AddForce(moveDir.x * airControl * moveInputMagnitude, 0f, moveDir.z * airControl * moveInputMagnitude);
                 vel = RB.velocity;
+                jumpVel = RB.velocity.y;
             }
         }
 
@@ -135,32 +155,47 @@ public class CharacterMovement : MonoBehaviour {
                     EndRoll();
                 }
                 Jump();
+                hasJumped = false;
+                RB.velocity = new Vector3(RB.velocity.x, 0f, RB.velocity.z);
+                //RB.AddForce(Vector3.up * currentJumpForce, ForceMode.Impulse);
                 if (sliding)
                 {
-                    vel = slopeVector * slideSpeed;
+                    jumpheightGravMul = RB.velocity.magnitude / slideSpeed;
+                    currentJumpForce = Mathf.Lerp( rollJumpForce, jumpForce, jumpheightGravMul);
                 }
+                else
+                {
+                    jumpheightGravMul = RB.velocity.magnitude / rollSpeed;
+                    currentJumpForce = Mathf.Lerp(jumpForce, rollJumpForce, jumpheightGravMul);
+                }
+                RB.AddForce(Vector3.up * currentJumpForce, ForceMode.Impulse);
             }
         }
-        if (jumpCounter > 0)
+        /*if (jumpCounter > 0)
         {
             if (Input.GetButton("Jump"))
-                jumpCounter -= Time.deltaTime / (jumpTime * jumpHoldMul);
+            {
+                //jumpCounter -= Time.deltaTime / (jumpTime * jumpHoldMul);
+                currentJumpGravMul = holdJumpGravMul;
+            }
             else
-                jumpCounter -= Time.deltaTime / jumpTime;
+            {
+                //jumpCounter -= Time.deltaTime / jumpTime;
+                currentJumpGravMul = jumpGravMul;
+            }
+            jumpCounter -= Time.deltaTime / jumpTime;
 
-            jumpVel = jumpCurve.Evaluate(1f - jumpCounter) * jumpHeight;
-        }
-        else
-        {
-            if (sliding)
-                jumpVel = RB.velocity.y + (slopeVector.y * slideSpeed);
-            else
-                jumpVel = RB.velocity.y;
-            hasJumped = false;
-        }
+           // jumpVel = jumpCurve.Evaluate(1f - jumpCounter) * jumpHeight;
+        }*/
+        //else
+       // {
+           // if (!sliding)
+                //jumpVel = RB.velocity.y;
+           // hasJumped = false;
+        //}
 
 
-        if (canRoll && Input.GetButtonDown("Roll") && isGrounded && takingMoveInput)
+        if (canRoll && Input.GetButtonDown("Roll") && isGrounded && takingMoveInput && !sliding)
         {
             StartCoroutine(ExecuteRoll());
         }
@@ -170,8 +205,8 @@ public class CharacterMovement : MonoBehaviour {
         {
             if (leftground) // happenes on landing
             {
-                if (jumpCounter < 0.2f)
-                    GameManager.Instance.cameraShake.Shake(0.2f, 0.2f, 0.6f);
+               // if (jumpCounter < 0.2f)
+                GameManager.Instance.cameraShake.Shake(0.2f, 0.2f, 0.6f);
                 //jumpVel = 0f;
                 jumpCounter = 0f;
                 hasJumped = false;
@@ -190,6 +225,7 @@ public class CharacterMovement : MonoBehaviour {
                 jumpCounter = 0.5f;
                 leftground = true;
             }
+            SetJumpVelTest();
         }
 
         if(Input.GetButtonDown("Fire1") && !rolling)
@@ -197,7 +233,13 @@ public class CharacterMovement : MonoBehaviour {
             //playerAnim.Attack();
             if(!isGrounded && canAirAttack)
             {
-                jumpCounter = 0.8f;
+                //jumpCounter = 0.8f;
+                //RB.velocity = Vector3.zero;
+                if (RB.velocity.y < 0f)
+                {
+                    jumpVel = 0f;
+                    RB.AddForce(Vector3.up * 10f * (-RB.velocity.y*0.03f), ForceMode.Impulse);
+                }
                 canAirAttack = false;
                 playerAnim.Attack();
             }
@@ -223,7 +265,8 @@ public class CharacterMovement : MonoBehaviour {
                 Physics.Raycast((transform.position + (transform.right * -0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f))
             {
                 isGrounded = true;
-                if (hit.collider.gameObject.isStatic == false)
+
+                if (hit.collider.gameObject.isStatic == false) // perant to not static objects / maybe switch to the two point parant system from cyberlight
                 {
                     transform.parent = hit.collider.transform;
                 }
@@ -259,6 +302,32 @@ public class CharacterMovement : MonoBehaviour {
         RB.velocity = new Vector3(lVel.x, jumpVel, lVel.z);
     }
 
+    void SetJumpVelTest()
+    {
+        if (Input.GetButton("Jump"))
+        {
+            //jumpCounter -= Time.deltaTime / (jumpTime * jumpHoldMul);
+            currentJumpGravMul = holdJumpGravMul;
+        }
+        else
+        {
+            //jumpCounter -= Time.deltaTime / jumpTime;
+            currentJumpGravMul = jumpGravMul;
+        }
+
+        float fallMul = Mathf.Lerp(fallGravMul, 1f, jumpheightGravMul);
+        float riseMul = Mathf.Lerp(currentJumpGravMul, 1f, jumpheightGravMul);
+        if (RB.velocity.y < -0.4f)
+        {
+            jumpVel +=  (Physics.gravity.y * fallMul * Time.deltaTime);
+        }
+        if (RB.velocity.y > 0f)
+        {
+            jumpVel += (Physics.gravity.y * riseMul * Time.deltaTime);
+        }
+
+    }
+
     void GetInput()
     {
         float x = Input.GetAxis("Horizontal");
@@ -280,11 +349,11 @@ public class CharacterMovement : MonoBehaviour {
     {
         if (isMounted)
             DismountPlayer();
-        jumpCounter = 1f;
-        jumpVel = 0f;
+        //jumpCounter = 1f;
+        //jumpVel = 0f;
         transform.parent = null;
         hasJumped = true;
-        jumpHeight = Mathf.Lerp(jumpMaxHeight, jumpMinHeight, RB.velocity.magnitude / rollSpeed);
+        //jumpHeight = Mathf.Lerp(jumpMaxHeight, jumpMinHeight, RB.velocity.magnitude / rollSpeed);
     }
 
     public void ApplyForce (Vector3 Force,float friction)
