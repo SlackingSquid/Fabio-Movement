@@ -17,27 +17,23 @@ public class CharacterMovement : MonoBehaviour {
     [HideInInspector] public float moveInputMagnitude;
     Vector3 moveDir;
 
-    public AnimationCurve jumpCurve;
-    public float jumpMinHeight = 1f;
-    public float jumpMaxHeight = 1.5f;
-    float jumpHeight = 1f;
-    public float jumpTime = 1f;
-    public float jumpHoldMul = 1.4f;
+    // new jump stuff
+    public float jumpGravMul = 4f;
+    public float fallGravMul = 4f;
+    public float holdJumpGravMul = 2f;
+    float jumpheightGravMul = 0f;
+    float currentJumpGravMul = 2f;
+    public float jumpForce = 15f;
+    public float rollJumpForce = 8f;
+    float currentJumpForce = 15f;
+
     float jumpVel = -1f;
     [HideInInspector] public float jumpCounter = 0f;
     [HideInInspector] public bool hasJumped = false;
     [HideInInspector] public bool isGrounded = false;
     [HideInInspector] public bool leftground = false;
 
-    // new jump stuff
-    float jumpGravMul = 4f;
-    float fallGravMul = 4f;
-    float holdJumpGravMul = 2f;
-    float jumpheightGravMul = 0f;
-    float currentJumpGravMul = 2f;
-    float jumpForce = 15f;
-    float rollJumpForce = 8f;
-    float currentJumpForce = 15f;
+    
 
     Vector3 vel;
     Vector3 lVel;
@@ -73,14 +69,17 @@ public class CharacterMovement : MonoBehaviour {
 
     bool canAirAttack = true;
 
+    bool checkForSliding = true;
+    [HideInInspector] public bool afterSlide = false;
+    float afterSlideTime = 0.2f;
+    float afterSlideCounter = 0f;
+
     // Use this for initialization
     void Start() {
 
         RB = GetComponent<Rigidbody>();
         moveDir = Vector3.forward;
-        jumpVel = jumpCurve.Evaluate(1f) * jumpMaxHeight;
         Jump();
-        jumpCounter = 0f;
         currentFriction = maxMoveFriction;
         currentTurnSpeed = turnSpeed;
     }
@@ -119,15 +118,19 @@ public class CharacterMovement : MonoBehaviour {
                 {
                     Vector3 vec = Vector3.Cross(slopeVector, Vector3.up).normalized;
                     vel = (moveDir * moveInputMagnitude * slideControl * Mathf.Abs(Vector3.Dot(moveDir, vec))) + (slopeVector * slideSpeed);
-                    //jumpVel = RB.velocity.y + (slopeVector.y * slideSpeed);
-                    jumpVel = RB.velocity.y;
+                    jumpVel = RB.velocity.y + (slopeVector.y * slideSpeed);
+                    //jumpVel = RB.velocity.y;
+                }
+                else if(afterSlide)
+                {
+                    vel = RB.velocity;
+                    jumpVel = (slopeVector.y * slideSpeed);
                 }
                 else
                 {
                     if (moveInputMagnitude > 0.6)
                     {
                         vel = moveDir * moveInputMagnitude * walkSpeed;
-                        //jumpVel = RB.velocity.y;
                     }
                     else
                     {
@@ -155,13 +158,15 @@ public class CharacterMovement : MonoBehaviour {
                     EndRoll();
                 }
                 Jump();
-                hasJumped = false;
+                //hasJumped = false;
                 RB.velocity = new Vector3(RB.velocity.x, 0f, RB.velocity.z);
-                //RB.AddForce(Vector3.up * currentJumpForce, ForceMode.Impulse);
                 if (sliding)
                 {
+                    StartCoroutine(TurnOffSlideCheckForSeconds());
                     jumpheightGravMul = RB.velocity.magnitude / slideSpeed;
                     currentJumpForce = Mathf.Lerp( rollJumpForce, jumpForce, jumpheightGravMul);
+                    //jumpheightGravMul = 1f;
+                    //currentJumpForce = jumpForce;
                 }
                 else
                 {
@@ -171,28 +176,6 @@ public class CharacterMovement : MonoBehaviour {
                 RB.AddForce(Vector3.up * currentJumpForce, ForceMode.Impulse);
             }
         }
-        /*if (jumpCounter > 0)
-        {
-            if (Input.GetButton("Jump"))
-            {
-                //jumpCounter -= Time.deltaTime / (jumpTime * jumpHoldMul);
-                currentJumpGravMul = holdJumpGravMul;
-            }
-            else
-            {
-                //jumpCounter -= Time.deltaTime / jumpTime;
-                currentJumpGravMul = jumpGravMul;
-            }
-            jumpCounter -= Time.deltaTime / jumpTime;
-
-           // jumpVel = jumpCurve.Evaluate(1f - jumpCounter) * jumpHeight;
-        }*/
-        //else
-       // {
-           // if (!sliding)
-                //jumpVel = RB.velocity.y;
-           // hasJumped = false;
-        //}
 
 
         if (canRoll && Input.GetButtonDown("Roll") && isGrounded && takingMoveInput && !sliding)
@@ -205,9 +188,7 @@ public class CharacterMovement : MonoBehaviour {
         {
             if (leftground) // happenes on landing
             {
-               // if (jumpCounter < 0.2f)
                 GameManager.Instance.cameraShake.Shake(0.2f, 0.2f, 0.6f);
-                //jumpVel = 0f;
                 jumpCounter = 0f;
                 hasJumped = false;
                 canAirAttack = true;
@@ -228,13 +209,10 @@ public class CharacterMovement : MonoBehaviour {
             SetJumpVelTest();
         }
 
-        if(Input.GetButtonDown("Fire1") && !rolling)
+        if(Input.GetButtonDown("Fire1") && !rolling && !sliding)
         {
-            //playerAnim.Attack();
             if(!isGrounded && canAirAttack)
             {
-                //jumpCounter = 0.8f;
-                //RB.velocity = Vector3.zero;
                 if (RB.velocity.y < 0f)
                 {
                     jumpVel = 0f;
@@ -249,11 +227,16 @@ public class CharacterMovement : MonoBehaviour {
             }
         }
 
-        if (moveInputMagnitude > 0.3)
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(moveDir), Time.deltaTime * currentTurnSpeed);
-        // transform.forward = Vector3.Lerp(transform.forward, moveDir, Time.deltaTime * 10f);
+        if(sliding || afterSlide)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(new Vector3(vel.x,0f,vel.z)), Time.deltaTime * currentTurnSpeed);
+        }
+        else
+        {
+            if (moveInputMagnitude > 0.3)//rotating the character
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(moveDir), Time.deltaTime * currentTurnSpeed);
+        }
 
-        //Debug.Log(RB.velocity.magnitude);
 
 
         RaycastHit hit;
@@ -262,7 +245,8 @@ public class CharacterMovement : MonoBehaviour {
             if (Physics.Raycast((transform.position + (transform.forward * 0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f) ||
                 Physics.Raycast((transform.position + (transform.forward * -0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f) ||
                 Physics.Raycast((transform.position + (transform.right * 0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f) ||
-                Physics.Raycast((transform.position + (transform.right * -0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f))
+                Physics.Raycast((transform.position + (transform.right * -0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f) ||
+                Physics.Raycast(transform.position + (transform.up * 0.1f), Vector3.down, out hit, 0.25f))
             {
                 isGrounded = true;
 
@@ -277,12 +261,25 @@ public class CharacterMovement : MonoBehaviour {
 
                 groundVector = hit.normal;
                 slopeVector = Vector3.Cross(-Vector3.Cross(groundVector, Vector3.up), groundVector);
-                if (slideAngle <= (Vector3.Angle(Vector3.up, slopeVector) - 90f))
+
+                if (slideAngle <= (Vector3.Angle(Vector3.up, slopeVector) - 90f) && checkForSliding)
                 {
                     sliding = true;
+                    afterSlide = true;
+                    afterSlideCounter = 0f;
                 }
                 else
                 {
+                    if(afterSlide)
+                    {
+                        if(afterSlideCounter > afterSlideTime)
+                        {
+                            afterSlide = false;
+                            afterSlideCounter = 0f;
+                        }
+                        afterSlideCounter += Time.deltaTime;
+                    }
+                    
                     sliding = false;
                 }
                 //Debug.Log(Vector3.Angle(Vector3.up, slopeVector)-90f);
@@ -290,6 +287,7 @@ public class CharacterMovement : MonoBehaviour {
             }
             else
             {
+                afterSlide = false;
                 isGrounded = false;
                 transform.parent = null;
                 sliding = false;
@@ -306,12 +304,10 @@ public class CharacterMovement : MonoBehaviour {
     {
         if (Input.GetButton("Jump"))
         {
-            //jumpCounter -= Time.deltaTime / (jumpTime * jumpHoldMul);
             currentJumpGravMul = holdJumpGravMul;
         }
         else
         {
-            //jumpCounter -= Time.deltaTime / jumpTime;
             currentJumpGravMul = jumpGravMul;
         }
 
@@ -349,11 +345,8 @@ public class CharacterMovement : MonoBehaviour {
     {
         if (isMounted)
             DismountPlayer();
-        //jumpCounter = 1f;
-        //jumpVel = 0f;
         transform.parent = null;
         hasJumped = true;
-        //jumpHeight = Mathf.Lerp(jumpMaxHeight, jumpMinHeight, RB.velocity.magnitude / rollSpeed);
     }
 
     public void ApplyForce (Vector3 Force,float friction)
@@ -444,5 +437,14 @@ public class CharacterMovement : MonoBehaviour {
         takingMoveInput = false;
         yield return new WaitForSeconds(time);
         takingMoveInput = true;
+    }
+
+    IEnumerator TurnOffSlideCheckForSeconds()
+    {
+        checkForSliding = false;
+        afterSlide = false;
+        afterSlideCounter = 0f;
+        yield return new WaitForSeconds(0.2f);
+        checkForSliding = true;
     }
 }

@@ -47,6 +47,7 @@ public class PlayerAnimations : MonoBehaviour {
         accelSecDerLerp = Mathf.Lerp(accelSecDerLerp, accelSecDer, Time.deltaTime * 5f);
         anim.SetFloat("runTilt", accelSecDerLerp * 5f);
 
+        anim.SetBool("sliding", GameManager.Instance.player.sliding || GameManager.Instance.player.afterSlide);
 
         if(GameManager.Instance.player.isGrounded)
         {
