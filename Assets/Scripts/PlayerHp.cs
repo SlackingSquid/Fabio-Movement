@@ -32,6 +32,12 @@ public class PlayerHp : MonoBehaviour {
         if(currentHP >= 0)
             hpBar.rectTransform.localScale = new Vector3(currentHP, 1, 1);
 
+
+        //for testing only!
+        if(currentHP <= 0)
+        {
+            GameManager.Instance.RestartScene();
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -39,6 +45,10 @@ public class PlayerHp : MonoBehaviour {
         if (other.gameObject.tag == "Damage" && canTakeDamage)
         {
             TakeDamage(other);
+        }
+        if (other.gameObject.tag == "DeathZone" && canTakeDamage)
+        {
+            KillPlayer();
         }
     }
 
@@ -49,6 +59,11 @@ public class PlayerHp : MonoBehaviour {
         playerMovement.ApplyForce((transform.position - other.transform.position).normalized * 15f, 0f);
         GameManager.Instance.cameraShake.Shake(0.4f, 0.2f, 0.6f);
         StartCoroutine(SetInvincibleForTime(invincibilityTime));
+    }
+
+    public void KillPlayer()
+    {
+        currentHP = 0;
     }
 
     public IEnumerator SetInvincibleForTime(float time)

@@ -13,8 +13,8 @@ public class Bolder : MonoBehaviour {
 	void Start () {
 
         RB = GetComponent<Rigidbody>();
-
-	}
+        damageTriggers.SetActive(false);
+    }
 	
 	// Update is called once per frame
 	void Update () {
