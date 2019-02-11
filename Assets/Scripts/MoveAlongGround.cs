@@ -19,7 +19,7 @@ public class MoveAlongGround : MonoBehaviour {
 
         RaycastHit hit;
 
-        if(Physics.Raycast(transform.position,Vector3.down,out hit,10f))
+        if(Physics.Raycast(transform.position + (Vector3.up * 0.5f), Vector3.down,out hit,10f))
         {
             if(hit.collider.gameObject.isStatic)
             {
