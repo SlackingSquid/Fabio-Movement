@@ -24,8 +24,8 @@ public class PlayerEffectsManager : MonoBehaviour {
         }
         if (player.leftground && player.isGrounded)
         {
-            if (player.jumpCounter < 0.1f)
-                Instantiate(landingEffect, transform.position, landingEffect.transform.rotation);
+            //if (player.jumpCounter < 0.1f)
+            Instantiate(landingEffect, transform.position, landingEffect.transform.rotation);
             playJumpEffect = true;
         }
         

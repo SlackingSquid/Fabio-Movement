@@ -31,7 +31,7 @@ public class PickUp : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" || other.gameObject.GetComponentInChildren<CharacterMovement>() == true)
         {
             GameManager.Instance.cameraShake.Shake(0.1f, 0.1f, 0.5f);
             Destroy(gameObject);

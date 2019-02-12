@@ -12,10 +12,11 @@ public class CharacterMovement : MonoBehaviour {
     public float walkSpeed = 5f;
     public float turnSpeed = 100f;
     [HideInInspector] public float currentTurnSpeed = 100f;
+    bool enableAirControl = true;
     public float airControl = 20f;
     public float airControlMaxSpeed = 5f;
     [HideInInspector] public float moveInputMagnitude;
-    Vector3 moveDir;
+    [HideInInspector] public Vector3 moveDir;
 
     // new jump stuff
     public float jumpGravMul = 4f;
@@ -28,7 +29,6 @@ public class CharacterMovement : MonoBehaviour {
     float currentJumpForce = 15f;
 
     float jumpVel = -1f;
-    [HideInInspector] public float jumpCounter = 0f;
     [HideInInspector] public bool hasJumped = false;
     [HideInInspector] public bool isGrounded = false;
     [HideInInspector] public bool leftground = false;
@@ -36,7 +36,7 @@ public class CharacterMovement : MonoBehaviour {
     
 
     Vector3 vel;
-    Vector3 lVel;
+    [HideInInspector] public Vector3 lVel;
 
     public float maxMoveFriction = 0.2f;
     float externalFriction = 0.2f;
@@ -79,7 +79,7 @@ public class CharacterMovement : MonoBehaviour {
 
         RB = GetComponent<Rigidbody>();
         moveDir = Vector3.forward;
-        Jump();
+        //Jump();
         currentFriction = maxMoveFriction;
         currentTurnSpeed = turnSpeed;
     }
@@ -87,9 +87,71 @@ public class CharacterMovement : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+        GetInput();
+
         if (takingMoveInput)
         {
-            GetInput();
+            if (sliding || afterSlide)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(new Vector3(vel.x, 0f, vel.z)), Time.deltaTime * currentTurnSpeed);
+            }
+            else
+            {
+                if (moveInputMagnitude > 0.3)//rotating the character
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(moveDir), Time.deltaTime * currentTurnSpeed);
+            }
+
+            if (isChargeShooting)
+            {
+                if (isGrounded)
+                    vel = Vector3.zero;
+            }
+            else
+            {
+                if (isGrounded)
+                {
+                    if (rolling)
+                    {
+                        vel = moveDir * rollSpeed;
+                        jumpVel = RB.velocity.y;
+                    }
+
+                    else if (sliding)
+                    {
+                        Vector3 vec = Vector3.Cross(slopeVector, Vector3.up).normalized;
+                        //vel = (moveDir * moveInputMagnitude * slideControl * Mathf.Abs(Vector3.Dot(moveDir, vec))) + (slopeVector * slideSpeed);
+                        vel = (vec * Vector3.Dot(moveDir, vec) * moveInputMagnitude * slideControl) + (slopeVector * slideSpeed);
+                        jumpVel = RB.velocity.y + (slopeVector.y * slideSpeed);
+                        //jumpVel = RB.velocity.y;
+                    }
+                    else if (afterSlide)
+                    {
+                        vel = RB.velocity;
+                        jumpVel = (slopeVector.y * slideSpeed);
+                    }
+                    else
+                    {
+                        if (moveInputMagnitude > 0.6)
+                        {
+                            vel = moveDir * moveInputMagnitude * walkSpeed;
+                        }
+                        else
+                        {
+                            vel = Vector3.zero - (slopeVector * 1.6f);
+                        }
+                        jumpVel = RB.velocity.y;
+                    }
+                }
+                else
+                {
+                    if (enableAirControl && (RB.velocity.magnitude < airControlMaxSpeed || Vector3.Dot(moveDir, RB.velocity.normalized) < 0.5f))
+                    {
+                        RB.AddForce(moveDir.x * airControl * moveInputMagnitude, 0f, moveDir.z * airControl * moveInputMagnitude);
+                    }
+                    vel = RB.velocity;
+                    jumpVel = RB.velocity.y;
+                }
+            }
         }
 
 
@@ -99,54 +161,7 @@ public class CharacterMovement : MonoBehaviour {
         if (currentFriction < maxMoveFriction)
             currentFriction = Mathf.Lerp(currentFriction, maxMoveFriction, Time.deltaTime * 1f);
 
-        if (isChargeShooting)
-        {
-            if(isGrounded)
-                vel = Vector3.zero;
-        }
-        else
-        {
-            if (isGrounded)
-            {
-                if (rolling)
-                {
-                    vel = moveDir * rollSpeed;
-                    jumpVel = RB.velocity.y;
-                }
-
-                else if (sliding)
-                {
-                    Vector3 vec = Vector3.Cross(slopeVector, Vector3.up).normalized;
-                    vel = (moveDir * moveInputMagnitude * slideControl * Mathf.Abs(Vector3.Dot(moveDir, vec))) + (slopeVector * slideSpeed);
-                    jumpVel = RB.velocity.y + (slopeVector.y * slideSpeed);
-                    //jumpVel = RB.velocity.y;
-                }
-                else if(afterSlide)
-                {
-                    vel = RB.velocity;
-                    jumpVel = (slopeVector.y * slideSpeed);
-                }
-                else
-                {
-                    if (moveInputMagnitude > 0.6)
-                    {
-                        vel = moveDir * moveInputMagnitude * walkSpeed;
-                    }
-                    else
-                    {
-                        vel = Vector3.zero - (slopeVector * 1.6f);
-                    }
-                    jumpVel = RB.velocity.y;
-                }
-            }
-            else
-            {
-                if (RB.velocity.magnitude < airControlMaxSpeed || Vector3.Dot(moveDir, RB.velocity.normalized) < 0.5f)
-                    RB.AddForce(moveDir.x * airControl * moveInputMagnitude, 0f, moveDir.z * airControl * moveInputMagnitude);
-                vel = RB.velocity;
-                jumpVel = RB.velocity.y;
-            }
-        }
+        
 
 
         if (Input.GetButtonDown("Jump"))//|| rolling))  // OPTION
@@ -159,21 +174,7 @@ public class CharacterMovement : MonoBehaviour {
                 }
                 Jump();
                 //hasJumped = false;
-                RB.velocity = new Vector3(RB.velocity.x, 0f, RB.velocity.z);
-                if (sliding)
-                {
-                    StartCoroutine(TurnOffSlideCheckForSeconds());
-                    jumpheightGravMul = RB.velocity.magnitude / slideSpeed;
-                    currentJumpForce = Mathf.Lerp( rollJumpForce, jumpForce, jumpheightGravMul);
-                    //jumpheightGravMul = 1f;
-                    //currentJumpForce = jumpForce;
-                }
-                else
-                {
-                    jumpheightGravMul = RB.velocity.magnitude / rollSpeed;
-                    currentJumpForce = Mathf.Lerp(jumpForce, rollJumpForce, jumpheightGravMul);
-                }
-                RB.AddForce(Vector3.up * currentJumpForce, ForceMode.Impulse);
+                
             }
         }
 
@@ -189,9 +190,12 @@ public class CharacterMovement : MonoBehaviour {
             if (leftground) // happenes on landing
             {
                 GameManager.Instance.cameraShake.Shake(0.2f, 0.2f, 0.6f);
-                jumpCounter = 0f;
                 hasJumped = false;
                 canAirAttack = true;
+            }
+            else
+            {
+                hasJumped = false;
             }
             leftground = false;
         }
@@ -203,13 +207,21 @@ public class CharacterMovement : MonoBehaviour {
             }
             else if (!leftground && !hasJumped)
             {
-                jumpCounter = 0.5f;
                 leftground = true;
             }
-            SetJumpVelTest();
+            SetJumpVel();
+
+            if (Physics.Raycast((transform.position + (transform.forward * 0.2f)) + (transform.up * 0.5f), transform.forward, 0.5f))
+            {
+                enableAirControl = false;
+            }
+            else
+            {
+                enableAirControl = true;
+            }
         }
 
-        if(Input.GetButtonDown("Fire1") && !rolling && !sliding)
+        if(Input.GetButtonDown("Fire1") && !rolling && !sliding &&!isMounted)
         {
             if(!isGrounded && canAirAttack)
             {
@@ -227,15 +239,7 @@ public class CharacterMovement : MonoBehaviour {
             }
         }
 
-        if(sliding || afterSlide)
-        {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(new Vector3(vel.x,0f,vel.z)), Time.deltaTime * currentTurnSpeed);
-        }
-        else
-        {
-            if (moveInputMagnitude > 0.3)//rotating the character
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(moveDir), Time.deltaTime * currentTurnSpeed);
-        }
+        
 
 
 
@@ -262,7 +266,7 @@ public class CharacterMovement : MonoBehaviour {
                 groundVector = hit.normal;
                 slopeVector = Vector3.Cross(-Vector3.Cross(groundVector, Vector3.up), groundVector);
 
-                if (slideAngle <= (Vector3.Angle(Vector3.up, slopeVector) - 90f) && checkForSliding)
+                if (hit.collider.tag == "SlipperySlope" && checkForSliding)//slideAngle <= (Vector3.Angle(Vector3.up, slopeVector) - 90f) && checkForSliding)
                 {
                     sliding = true;
                     afterSlide = true;
@@ -293,6 +297,8 @@ public class CharacterMovement : MonoBehaviour {
                 sliding = false;
             }
         }
+
+        //Debug.Log(isGrounded);
     }
 
     private void FixedUpdate()
@@ -300,7 +306,7 @@ public class CharacterMovement : MonoBehaviour {
         RB.velocity = new Vector3(lVel.x, jumpVel, lVel.z);
     }
 
-    void SetJumpVelTest()
+    void SetJumpVel()
     {
         if (Input.GetButton("Jump"))
         {
@@ -313,11 +319,11 @@ public class CharacterMovement : MonoBehaviour {
 
         float fallMul = Mathf.Lerp(fallGravMul, 1f, jumpheightGravMul);
         float riseMul = Mathf.Lerp(currentJumpGravMul, 1f, jumpheightGravMul);
-        if (RB.velocity.y < -0.4f)
+        if (RB.velocity.y <= 0f)
         {
             jumpVel +=  (Physics.gravity.y * fallMul * Time.deltaTime);
         }
-        if (RB.velocity.y > 0f)
+        else
         {
             jumpVel += (Physics.gravity.y * riseMul * Time.deltaTime);
         }
@@ -347,6 +353,26 @@ public class CharacterMovement : MonoBehaviour {
             DismountPlayer();
         transform.parent = null;
         hasJumped = true;
+        RB.velocity = new Vector3(RB.velocity.x, 0f, RB.velocity.z);
+        jumpVel = 0f;
+
+        if (sliding)
+        {
+            StartCoroutine(TurnOffSlideCheckForSeconds());
+            //jumpheightGravMul = RB.velocity.magnitude / slideSpeed;
+            //currentJumpForce = Mathf.Lerp(rollJumpForce, jumpForce, jumpheightGravMul);
+            jumpheightGravMul = 0.5f;
+            currentJumpForce = rollJumpForce;
+            lVel = RB.velocity;
+        }
+        else
+        {
+            jumpheightGravMul = RB.velocity.magnitude / rollSpeed;
+            currentJumpForce = Mathf.Lerp(jumpForce, rollJumpForce, jumpheightGravMul);
+        }
+        //Debug.Log(currentJumpForce);
+        RB.AddForce(Vector3.up * currentJumpForce, ForceMode.Impulse);
+        //jumpVel = currentJumpForce;
     }
 
     public void ApplyForce (Vector3 Force,float friction)
@@ -392,10 +418,11 @@ public class CharacterMovement : MonoBehaviour {
     {
         if(transform.parent == null)
         {
+            EndRoll();
             currentMount = mount;
             transform.parent = mount.transform;
             transform.position = mount.transform.position;
-            transform.forward = mount.transform.forward;
+            transform.rotation = mount.transform.rotation;
             takingMoveInput = false;
             RB.isKinematic = true;
             isMounted = true;
@@ -415,6 +442,7 @@ public class CharacterMovement : MonoBehaviour {
         takingMoveInput = true;
         isMounted = false;
         playerCollision.SetActive(true);
+        transform.up = Vector3.up;
     }
 
     public void EnterChargeShootingMode()

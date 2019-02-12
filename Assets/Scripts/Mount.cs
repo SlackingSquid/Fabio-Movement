@@ -41,7 +41,7 @@ public class Mount : MonoBehaviour {
     IEnumerator DisableMountTrigger()
     {
         mountTrigger.SetActive(false);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         mountTrigger.SetActive(true);
     }
     

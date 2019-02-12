@@ -79,4 +79,14 @@ public class PlayerAnimations : MonoBehaviour {
     {
         anim.SetTrigger("attack");
     }
+
+    public void MountToWall()
+    {
+        anim.SetBool("mWall", true);
+    }
+
+    public void DismountEverything()
+    {
+        anim.SetBool("mWall", false);
+    }
 }

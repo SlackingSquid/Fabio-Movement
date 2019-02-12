@@ -24,7 +24,7 @@ public class HealthPickUp : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" || other.gameObject.GetComponentInChildren<CharacterMovement>() == true)
         {
             Destroy(gameObject);
             GameManager.Instance.playerHP.GainHP(maxHp);

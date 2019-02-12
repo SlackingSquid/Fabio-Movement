@@ -4755,7 +4755,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!114 &114108496850172948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4778,15 +4778,16 @@ MonoBehaviour:
   airControl: 25
   airControlMaxSpeed: 8
   moveInputMagnitude: 0
+  moveDir: {x: 0, y: 0, z: 0}
   jumpGravMul: 4
   fallGravMul: 4
   holdJumpGravMul: 2
   jumpForce: 15
   rollJumpForce: 8
-  jumpCounter: 0
   hasJumped: 0
   isGrounded: 0
   leftground: 0
+  lVel: {x: 0, y: 0, z: 0}
   maxMoveFriction: 0.15
   playerCollision: {fileID: 1984199551969278}
   rollCollision: {fileID: 1870587796557962}
@@ -4795,9 +4796,9 @@ MonoBehaviour:
   rollCooldown: 0.5
   rollJumpTimeWindow: 0.06
   rolling: 0
-  slideSpeed: 6
-  slideControl: 8
-  slideAngle: 30
+  slideSpeed: 30
+  slideControl: 15
+  slideAngle: 25
   sliding: 0
   isChargeShooting: 0
   chargeShootingTurnSpeed: 300
@@ -34420,27 +34421,27 @@ PrefabInstance:
       objectReference: {fileID: 3618672611299797306}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Center.x
-      value: -0.000015258789
+      value: -42.33779
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Center.y
-      value: 150.0428
+      value: -9.582922
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Center.z
-      value: -8.88831
+      value: -5.630225
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: 34.18601
+      value: 40.57643
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: 41.10741
+      value: 30.699387
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Extent.z
-      value: 23.136889
+      value: 24.63372
       objectReference: {fileID: 0}
     - target: {fileID: 13700000, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_Materials.Array.size
