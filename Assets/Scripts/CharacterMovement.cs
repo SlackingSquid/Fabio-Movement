@@ -28,7 +28,7 @@ public class CharacterMovement : MonoBehaviour {
     public float rollJumpForce = 8f;
     float currentJumpForce = 15f;
 
-    float jumpVel = -1f;
+    [HideInInspector] public float jumpVel = -1f;
     [HideInInspector] public bool hasJumped = false;
     [HideInInspector] public bool isGrounded = false;
     [HideInInspector] public bool leftground = false;

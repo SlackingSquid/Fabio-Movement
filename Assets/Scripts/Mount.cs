@@ -28,7 +28,7 @@ public class Mount : MonoBehaviour {
                 }
             }
         }
-        if(other.gameObject.tag == "Damage" && playerIsOn)
+        if((other.gameObject.tag == "Damage" || other.gameObject.tag == "DeathZone") && playerIsOn)
         {
             GameManager.Instance.player.Jump();
         }
