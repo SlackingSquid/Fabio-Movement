@@ -262,7 +262,7 @@ public class CharacterMovement : MonoBehaviour {
                 if (hit.collider.gameObject.isStatic == false) // perant to not static objects / maybe switch to the two point parant system from cyberlight // done
                 {
                     //transform.parent = hit.collider.transform;
-                    if (anchorPoint.transform.parent == null || hit.collider.transform != anchorPoint.transform.parent)
+                    if (anchorPoint.transform.parent == null)// || hit.collider.transform != anchorPoint.transform.parent.transform)
                     {
                         //transform.position = hit.point;
                         anchorPoint.transform.position = hit.point;
