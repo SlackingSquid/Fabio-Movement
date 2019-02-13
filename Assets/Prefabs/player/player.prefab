@@ -4784,6 +4784,7 @@ MonoBehaviour:
   holdJumpGravMul: 2
   jumpForce: 15
   rollJumpForce: 8
+  jumpVel: -1
   hasJumped: 0
   isGrounded: 0
   leftground: 0
@@ -4796,14 +4797,16 @@ MonoBehaviour:
   rollCooldown: 0.5
   rollJumpTimeWindow: 0.06
   rolling: 0
-  slideSpeed: 30
-  slideControl: 15
+  slideSpeed: 8
+  slideControl: 4
   slideAngle: 25
   sliding: 0
   isChargeShooting: 0
   chargeShootingTurnSpeed: 300
   playerAnim: {fileID: 5954575681958288173}
   afterSlide: 0
+  anchorPoint: {fileID: 0}
+  anchorPointFollow: {fileID: 0}
 --- !u!114 &114162541080542030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34421,27 +34424,27 @@ PrefabInstance:
       objectReference: {fileID: 3618672611299797306}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Center.x
-      value: -42.33779
+      value: -43.85012
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Center.y
-      value: -9.582922
+      value: -13.423985
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Center.z
-      value: -5.630225
+      value: -1.9318402
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: 40.57643
+      value: 39.936203
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: 30.699387
+      value: 34.18474
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_AABB.m_Extent.z
-      value: 24.63372
+      value: 26.094978
       objectReference: {fileID: 0}
     - target: {fileID: 13700000, guid: 300d5107344d18f47832d2092161535a, type: 3}
       propertyPath: m_Materials.Array.size
