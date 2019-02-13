@@ -11,6 +11,7 @@ TagManager:
   - Trigger
   - DeathZone
   - SlipperySlope
+  - UpWindZone
   layers:
   - Default
   - TransparentFX

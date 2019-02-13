@@ -32,6 +32,11 @@ public class CameraFollow : MonoBehaviour {
         else
             invY = -1f;
 
+        if(Input.GetButtonDown("Submit"))
+        {
+            invertY = !invertY;
+        }
+
         if(transform.localEulerAngles.x > 300f && transform.localEulerAngles.x < 360f)
             xRotFixer = transform.localEulerAngles.x - 360f;
         else

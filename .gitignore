@@ -34,3 +34,35 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Assets/Scenes/test level/LightingData.asset
+Assets/Scenes/test level/LightingData.asset.meta
+Assets/Scenes/test level/Lightmap-0_comp_dir.png
+Assets/Scenes/test level/Lightmap-0_comp_dir.png.meta
+Assets/Scenes/test level/Lightmap-0_comp_light.exr
+Assets/Scenes/test level/Lightmap-0_comp_light.exr.meta
+Assets/Scenes/test level/Lightmap-1_comp_dir.png
+Assets/Scenes/test level/Lightmap-1_comp_dir.png.meta
+Assets/Scenes/test level/Lightmap-1_comp_light.exr
+Assets/Scenes/test level/Lightmap-1_comp_light.exr.meta
+Assets/Scenes/test level/Lightmap-2_comp_dir.png
+Assets/Scenes/test level/Lightmap-2_comp_dir.png.meta
+Assets/Scenes/test level/Lightmap-2_comp_light.exr
+Assets/Scenes/test level/Lightmap-2_comp_light.exr.meta
+Assets/Scenes/test level/Lightmap-3_comp_dir.png
+Assets/Scenes/test level/Lightmap-3_comp_dir.png.meta
+Assets/Scenes/test level/Lightmap-3_comp_light.exr
+Assets/Scenes/test level/Lightmap-3_comp_light.exr.meta
+Assets/Scenes/test level/Lightmap-4_comp_dir.png
+Assets/Scenes/test level/Lightmap-4_comp_dir.png.meta
+Assets/Scenes/test level/Lightmap-4_comp_light.exr
+Assets/Scenes/test level/Lightmap-4_comp_light.exr.meta
+Assets/Scenes/test level/Lightmap-5_comp_dir.png
+Assets/Scenes/test level/Lightmap-5_comp_dir.png.meta
+Assets/Scenes/test level/Lightmap-5_comp_light.exr
+Assets/Scenes/test level/Lightmap-5_comp_light.exr.meta
+Assets/Scenes/test level/Lightmap-6_comp_dir.png
+Assets/Scenes/test level/Lightmap-6_comp_dir.png.meta
+Assets/Scenes/test level/Lightmap-6_comp_light.exr
+Assets/Scenes/test level/Lightmap-6_comp_light.exr.meta
+Assets/Scenes/test level/ReflectionProbe-0.exr
+Assets/Scenes/test level/ReflectionProbe-0.exr.meta

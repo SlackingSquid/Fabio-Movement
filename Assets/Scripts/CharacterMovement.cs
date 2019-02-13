@@ -74,6 +74,11 @@ public class CharacterMovement : MonoBehaviour {
     float afterSlideTime = 0.2f;
     float afterSlideCounter = 0f;
 
+    public GameObject anchorPoint;
+    public GameObject anchorPointFollow;
+
+    Coroutine rollCoroutine;
+
     // Use this for initialization
     void Start() {
 
@@ -178,10 +183,10 @@ public class CharacterMovement : MonoBehaviour {
             }
         }
 
-
+        
         if (canRoll && Input.GetButtonDown("Roll") && isGrounded && takingMoveInput && !sliding)
         {
-            StartCoroutine(ExecuteRoll());
+            ExecuteRoll();
         }
 
 
@@ -189,7 +194,7 @@ public class CharacterMovement : MonoBehaviour {
         {
             if (leftground) // happenes on landing
             {
-                GameManager.Instance.cameraShake.Shake(0.2f, 0.2f, 0.6f);
+                GameManager.Instance.cameraShake.Shake(0.1f, 0.1f, 0.4f);
                 hasJumped = false;
                 canAirAttack = true;
             }
@@ -254,13 +259,24 @@ public class CharacterMovement : MonoBehaviour {
             {
                 isGrounded = true;
 
-                if (hit.collider.gameObject.isStatic == false) // perant to not static objects / maybe switch to the two point parant system from cyberlight
+                if (hit.collider.gameObject.isStatic == false) // perant to not static objects / maybe switch to the two point parant system from cyberlight // done
                 {
-                    transform.parent = hit.collider.transform;
+                    //transform.parent = hit.collider.transform;
+                    if (anchorPoint.transform.parent == null || hit.collider.transform != anchorPoint.transform.parent)
+                    {
+                        //transform.position = hit.point;
+                        anchorPoint.transform.position = hit.point;
+                        anchorPoint.transform.parent = hit.collider.transform; 
+                        transform.parent = anchorPointFollow.transform;
+                    }
+                    //transform.position = anchorPointFollow.transform.position;
+                    //transform.parent = anchorPointFollow.transform;
                 }
                 else
                 {
                     transform.parent = null;
+                    anchorPoint.transform.parent = null;
+                    anchorPoint.transform.position = transform.position;
                 }
 
                 groundVector = hit.normal;
@@ -294,11 +310,15 @@ public class CharacterMovement : MonoBehaviour {
                 afterSlide = false;
                 isGrounded = false;
                 transform.parent = null;
+                anchorPoint.transform.parent = null;
+                anchorPoint.transform.position = transform.position;
                 sliding = false;
             }
         }
 
         //Debug.Log(isGrounded);
+
+
     }
 
     private void FixedUpdate()
@@ -381,23 +401,33 @@ public class CharacterMovement : MonoBehaviour {
         currentFriction = friction;
     }
 
-    IEnumerator ExecuteRoll()
+    void ExecuteRoll()
     {
         takingMoveInput = false;
         takingJumpInput = false;
         playerCollision.SetActive(false);
         rollCollision.SetActive(true);
-        vel = moveDir * rollSpeed;
+        //vel = moveDir * rollSpeed;
+        vel = transform.forward * rollSpeed;
         rolling = true;
-        yield return new WaitForSeconds(rollDuration-rollJumpTimeWindow);
+        rollCoroutine = StartCoroutine(ExecuteRollEnding());
+    }
+    IEnumerator ExecuteRollEnding()
+    {
+        yield return new WaitForSeconds(rollDuration - rollJumpTimeWindow);
         canRollJump = true;
         takingJumpInput = true;
         yield return new WaitForSeconds(rollJumpTimeWindow);
-        if(rolling)
+        if (rolling)
             EndRoll();
     }
     void EndRoll()
     {
+        if (CheckForRoof())
+        {
+            ExecuteRoll();
+            return;
+        }
         takingMoveInput = true;
         takingJumpInput = true;
         playerCollision.SetActive(true);
@@ -407,12 +437,31 @@ public class CharacterMovement : MonoBehaviour {
         StartCoroutine(RollCooldownCounter());
         canRollJump = false;
     }
+    private bool CheckForRoof()
+    {
+        if ((Physics.Raycast(transform.position + (transform.up * 0.8f) + (transform.forward*0.0f), Vector3.up, 1f) || 
+            Physics.Raycast(transform.position + (transform.up * 0.8f) + (transform.forward * 0.2f), Vector3.up, 1f) ||
+            Physics.Raycast(transform.position + (transform.up * 0.8f) + (transform.forward * -0.2f), Vector3.up, 1f) ||
+            Physics.Raycast(transform.position + (transform.up * 0.8f) + (transform.right * 0.2f), Vector3.up, 1f) ||
+            Physics.Raycast(transform.position + (transform.up * 0.8f) + (transform.right * -0.2f), Vector3.up, 1f)) 
+            && rolling)
+        {
+            return (true);
+        }
+        else
+        {
+            return (false);
+        }
+    }
+
     IEnumerator RollCooldownCounter()
     {
         canRoll = false;
         yield return new WaitForSeconds(rollDuration);
         canRoll = true;
     }
+
+    
 
     public void MountPlayer(Mount mount)
     {
@@ -474,5 +523,32 @@ public class CharacterMovement : MonoBehaviour {
         afterSlideCounter = 0f;
         yield return new WaitForSeconds(0.2f);
         checkForSliding = true;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "UpWindZone" && !isGrounded)
+        {
+            //Debug.Log(other.gameObject.tag);
+            // GameManager.Instance.player.RB.AddForce(transform.up * force);
+            /*if(GameManager.Instance.player.RB.velocity.y < 2f)
+            {
+                GameManager.Instance.player.RB.velocity += Vector3.up * force;
+            }*/
+            //GameManager.Instance.player.RB.velocity += Vector3.up*force;
+            if (Input.GetButton("Jump"))
+            {
+                if (GameManager.Instance.player.RB.velocity.y < 10f)
+                    GameManager.Instance.player.RB.velocity += Vector3.up * 1.5f;
+            }
+            else
+            {
+                if (GameManager.Instance.player.RB.velocity.y < -4f)
+                    GameManager.Instance.player.RB.velocity += Vector3.up * 0.8f;
+                else
+                    GameManager.Instance.player.RB.velocity += Vector3.up * 0.4f;
+            }
+        }
+
     }
 }
