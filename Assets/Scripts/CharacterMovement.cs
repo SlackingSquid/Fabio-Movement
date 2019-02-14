@@ -76,8 +76,8 @@ public class CharacterMovement : MonoBehaviour {
 
     public GameObject anchorPoint;
     public GameObject anchorPointFollow;
-
-    Coroutine rollCoroutine;
+    RaycastHit mainHit;
+    float resetAnchorCounter = 0f;
 
     // Use this for initialization
     void Start() {
@@ -249,26 +249,42 @@ public class CharacterMovement : MonoBehaviour {
 
 
         RaycastHit hit;
+        
         if (!isMounted)
         {
-            if (Physics.Raycast((transform.position + (transform.forward * 0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f) ||
+            if (Physics.Raycast(transform.position + (transform.up * 0.1f), Vector3.down, out mainHit, 0.25f) && 
+                (Physics.Raycast((transform.position + (transform.forward * 0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f) ||
                 Physics.Raycast((transform.position + (transform.forward * -0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f) ||
                 Physics.Raycast((transform.position + (transform.right * 0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f) ||
-                Physics.Raycast((transform.position + (transform.right * -0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f) ||
-                Physics.Raycast(transform.position + (transform.up * 0.1f), Vector3.down, out hit, 0.25f))
+                Physics.Raycast((transform.position + (transform.right * -0.2f)) + (transform.up * 0.1f), Vector3.down, out hit, 0.25f)))
             {
                 isGrounded = true;
 
-                if (hit.collider.gameObject.isStatic == false) // perant to not static objects / maybe switch to the two point parant system from cyberlight // done
+                if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Solid"))//hit.collider.gameObject.isStatic == false) // perant to not static objects / maybe switch to the two point parant system from cyberlight // done
                 {
                     //transform.parent = hit.collider.transform;
-                    if (anchorPoint.transform.parent == null)// || hit.collider.transform != anchorPoint.transform.parent.transform)
+                    if (resetAnchorCounter > 0.2f)
                     {
-                        //transform.position = hit.point;
-                        anchorPoint.transform.position = hit.point;
-                        anchorPoint.transform.parent = hit.collider.transform; 
-                        transform.parent = anchorPointFollow.transform;
+                        resetAnchorCounter = 0f;
+                        ResetAnchor();
                     }
+                    else
+                    {
+                        resetAnchorCounter += Time.deltaTime;
+                        if (anchorPoint.transform.parent == null)// || hit.collider.transform != anchorPoint.transform.parent.transform)
+                        {
+                            //transform.position = hit.point;
+                            anchorPoint.transform.position = mainHit.point;
+                            anchorPoint.transform.parent = mainHit.collider.transform;
+                            anchorPointFollow.transform.position = anchorPoint.transform.position;
+                            transform.parent = anchorPointFollow.transform;
+                        }
+                    }
+
+                    
+
+                    
+                    
                     //transform.position = anchorPointFollow.transform.position;
                     //transform.parent = anchorPointFollow.transform;
                 }
@@ -324,6 +340,13 @@ public class CharacterMovement : MonoBehaviour {
     private void FixedUpdate()
     {
         RB.velocity = new Vector3(lVel.x, jumpVel, lVel.z);
+    }
+
+    void ResetAnchor()
+    {
+        transform.parent = null;
+        anchorPoint.transform.parent = null;
+        anchorPoint.transform.position = transform.position;
     }
 
     void SetJumpVel()
@@ -410,7 +433,7 @@ public class CharacterMovement : MonoBehaviour {
         //vel = moveDir * rollSpeed;
         vel = transform.forward * rollSpeed;
         rolling = true;
-        rollCoroutine = StartCoroutine(ExecuteRollEnding());
+        StartCoroutine(ExecuteRollEnding());
     }
     IEnumerator ExecuteRollEnding()
     {

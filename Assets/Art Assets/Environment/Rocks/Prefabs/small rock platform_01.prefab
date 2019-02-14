@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8863451097558329842}
   - component: {fileID: 8969279594468467089}
   - component: {fileID: 1530588564}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Group28793
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 899241529874862411}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: small rock platform_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

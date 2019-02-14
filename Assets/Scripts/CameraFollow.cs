@@ -63,7 +63,7 @@ public class CameraFollow : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(transform.position + (Vector3.up * 0.5f), -transform.forward, out hit, cameraMaxDistance))
         {
-            if (hit.collider.gameObject.isStatic == true)
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Solid"))//hit.collider.gameObject.isStatic == true)
             {
                 cameraDestination = hit.point + (transform.forward * 0.1f) + (hit.normal * 0.5f);
             }

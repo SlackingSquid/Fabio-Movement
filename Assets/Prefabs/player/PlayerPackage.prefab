@@ -27,6 +27,7 @@ Transform:
   m_LocalPosition: {x: 3.41, y: 0.46, z: 28.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 3614616040177083799}
   - {fileID: 1349107336561310425}
   - {fileID: 224146855841269342}
   - {fileID: 1265672219043652664}
@@ -216,7 +217,7 @@ RectTransform:
   - {fileID: 224600454453050794}
   - {fileID: 224110208538824820}
   m_Father: {fileID: 4049131494839424}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -311,7 +312,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4049131494839424}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1661297655745072756
 GameObject:
@@ -340,10 +341,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 3614616040177083799}
+  m_Children: []
   m_Father: {fileID: 4049131494839424}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4433516838776797366
 MonoBehaviour:
@@ -399,7 +399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4052979219349652, guid: 3fe7831ccb6e36f408f25a0572d4f60e, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4052979219349652, guid: 3fe7831ccb6e36f408f25a0572d4f60e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -482,7 +482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4530275617474760, guid: 623dc7e7b917df94b862de183f8227e1, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4530275617474760, guid: 623dc7e7b917df94b862de183f8227e1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -544,7 +544,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5681379297668124460}
+    m_TransformParent: {fileID: 4049131494839424}
     m_Modifications:
     - target: {fileID: 1323881518379096, guid: 81d5eddf8a8e75146b216895528c0bf7, type: 3}
       propertyPath: m_Name

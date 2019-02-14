@@ -18,15 +18,15 @@ public class RotateOverTime : MonoBehaviour
     {
         if(xAxis)
         {
-            transform.RotateAroundLocal(transform.right, speed * Time.deltaTime);
+            transform.Rotate(transform.right, speed * Time.deltaTime,Space.World);
         }
         if (yAxis)
         {
-            transform.RotateAroundLocal(transform.up, speed * Time.deltaTime);
+            transform.Rotate(transform.up, speed * Time.deltaTime, Space.World);
         }
         if (zAxis)
         {
-            transform.RotateAroundLocal(transform.forward, speed * Time.deltaTime);
+            transform.Rotate(transform.forward, speed * Time.deltaTime, Space.World);
         }
     }
 }

@@ -4755,7 +4755,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!114 &114108496850172948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4798,7 +4798,7 @@ MonoBehaviour:
   rollJumpTimeWindow: 0.06
   rolling: 0
   slideSpeed: 8
-  slideControl: 4
+  slideControl: 6
   slideAngle: 25
   sliding: 0
   isChargeShooting: 0
