@@ -116,7 +116,7 @@ public class CameraFollow : MonoBehaviour {
         }
     }
 
-    void ResetFuckedUpCamera()
+    public void ResetFuckedUpCamera()
     {
         transform.forward = (player.transform.forward - (Vector3.up * 0.6f)).normalized;
     }

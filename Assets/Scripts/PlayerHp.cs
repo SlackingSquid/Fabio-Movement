@@ -15,7 +15,7 @@ public class PlayerHp : MonoBehaviour {
     public Image hpBar;
     public Image hpBarBG;
 
-
+    bool playerAreadyDied = false;
     // Use this for initialization
     void Start () {
 
@@ -34,9 +34,16 @@ public class PlayerHp : MonoBehaviour {
 
 
         //for testing only!
-        if(currentHP <= 0)
+        if(currentHP <= 0 && !playerAreadyDied)
         {
-            GameManager.Instance.RestartScene();
+            //GameManager.Instance.ResetFromCheckPoint();
+            playerAreadyDied = true;
+            StartCoroutine(GameManager.Instance.ResetFromCheckPoint());
+        }
+
+        if(currentHP > 0)
+        {
+            playerAreadyDied = false;
         }
     }
 

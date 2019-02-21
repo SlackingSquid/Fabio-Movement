@@ -149,6 +149,11 @@ public class CharacterMovement : MonoBehaviour {
                 }
                 else
                 {
+                    if(rolling)
+                    {
+                        EndRoll();
+                    }
+
                     if (enableAirControl && (RB.velocity.magnitude < airControlMaxSpeed || Vector3.Dot(moveDir, RB.velocity.normalized) < 0.5f))
                     {
                         RB.AddForce(moveDir.x * airControl * moveInputMagnitude, 0f, moveDir.z * airControl * moveInputMagnitude);
@@ -228,7 +233,7 @@ public class CharacterMovement : MonoBehaviour {
 
         if(Input.GetButtonDown("Fire1") && !rolling && !sliding &&!isMounted)
         {
-            if(!isGrounded && canAirAttack)
+            /*if(!isGrounded && canAirAttack)
             {
                 if (RB.velocity.y < 0f)
                 {
@@ -241,7 +246,8 @@ public class CharacterMovement : MonoBehaviour {
             else if(isGrounded)
             {
                 playerAnim.Attack();
-            }
+            }*/
+            playerAnim.Attack();
         }
 
         
@@ -280,11 +286,6 @@ public class CharacterMovement : MonoBehaviour {
                             transform.parent = anchorPointFollow.transform;
                         }
                     }
-
-                    
-
-                    
-                    
                     //transform.position = anchorPointFollow.transform.position;
                     //transform.parent = anchorPointFollow.transform;
                 }
@@ -566,10 +567,10 @@ public class CharacterMovement : MonoBehaviour {
             }
             else
             {
-                if (GameManager.Instance.player.RB.velocity.y < -4f)
-                    GameManager.Instance.player.RB.velocity += Vector3.up * 0.8f;
+                if (GameManager.Instance.player.RB.velocity.y < -6f)
+                    GameManager.Instance.player.RB.velocity += Vector3.up * 0.6f;
                 else
-                    GameManager.Instance.player.RB.velocity += Vector3.up * 0.4f;
+                    GameManager.Instance.player.RB.velocity += Vector3.up * 0.2f;
             }
         }
 
