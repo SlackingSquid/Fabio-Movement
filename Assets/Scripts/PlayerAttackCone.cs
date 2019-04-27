@@ -20,6 +20,11 @@ public class PlayerAttackCone : MonoBehaviour {
         {
             GameManager.Instance.player.ApplyForce(-GameManager.Instance.player.transform.forward * 5f, 0.1f);
             GameManager.Instance.cameraShake.Shake(0.05f, 0.1f, 0.2f);
+            StartCoroutine(GameManager.Instance.player.playerAnim.PauseAttackForSec());
+        }
+        if(other.gameObject.tag == "Enemy")
+        {
+            StartCoroutine(GameManager.Instance.player.playerAnim.PauseAttackForSec());
         }
     }
 }

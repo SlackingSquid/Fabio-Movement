@@ -89,4 +89,15 @@ public class PlayerAnimations : MonoBehaviour {
     {
         anim.SetBool("mWall", false);
     }
+
+    public IEnumerator PauseAttackForSec()
+    {
+        //anim.StopPlayback();
+        //anim.SetFloat("attackPauseMul", 0.1f);
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(0.06f);
+        Time.timeScale = 1f;
+        //anim.StartPlayback();
+        //anim.SetFloat("attackPauseMul", 1f);
+    }
 }
